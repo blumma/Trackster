@@ -2,8 +2,10 @@ package at.sw2017.trackster;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,8 +31,11 @@ public class ExampleInstrumentedTest {
         assertEquals("at.sw2017.trackster", appContext.getPackageName());
     }
 
-    @Test
+    @Rule
+    public ActivityTestRule<MainActivity> menuActivityTestRule =
+            new ActivityTestRule<>(MainActivity.class, true, true);
 
+    @Test
     public void testLogin()
     {
         String first_name = "firstname";
