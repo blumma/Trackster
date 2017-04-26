@@ -5,22 +5,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class MenuActivity extends AppCompatActivity {
+public class SportActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu);
 
-        final Button button = (Button) findViewById(R.id.button_input);
+        System.out.println("do i get here2");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sport_screen);
+
+        final Button button = (Button) findViewById(R.id.button_60m);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                System.out.println("do i get here");
 
-                Intent myIntent = new Intent(v.getContext(), SportActivity.class);
+                Intent myIntent = new Intent(v.getContext(), StudentActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
