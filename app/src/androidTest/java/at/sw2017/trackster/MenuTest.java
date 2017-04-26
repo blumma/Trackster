@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.Menu;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class MenuTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -32,22 +33,15 @@ public class ExampleInstrumentedTest {
     }
 
     @Rule
-    public ActivityTestRule<MainActivity> menuActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<MenuActivity> menuActivityTestRule =
+            new ActivityTestRule<>(MenuActivity.class, true, true);
 
     @Test
-    public void testLogin()
+    public void testMenuButton()
     {
-        String first_name = "firstname";
-        String password = "password";
-
-        onView(withId(R.id.edit_text_username)).perform(typeText(first_name), closeSoftKeyboard());
-
-        onView(withId(R.id.edit_text_password)).perform(typeText(password), closeSoftKeyboard());
-
-        onView(withId(R.id.login_button)).perform(click());
-
-
+        onView( withId(R.id.button_1000m)). perform ( click());
+        onView( withId(R.id.button_logout)). perform ( click());
+        onView( withId(R.id.button_input)). perform ( click());
     }
 
 }

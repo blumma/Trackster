@@ -9,12 +9,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.anything;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -22,7 +24,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class StudentTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -32,21 +34,16 @@ public class ExampleInstrumentedTest {
     }
 
     @Rule
-    public ActivityTestRule<MainActivity> menuActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<StudentActivity> menuActivityTestRule =
+            new ActivityTestRule<>(StudentActivity.class, true, true);
 
     @Test
-    public void testLogin()
+    public void testListView()
     {
-        String first_name = "firstname";
-        String password = "password";
-
-        onView(withId(R.id.edit_text_username)).perform(typeText(first_name), closeSoftKeyboard());
-
-        onView(withId(R.id.edit_text_password)).perform(typeText(password), closeSoftKeyboard());
-
-        onView(withId(R.id.login_button)).perform(click());
-
+        onView(withId(R.id.simpleSearchView)).perform(typeText("Jan"), closeSoftKeyboard());
+        onData(anything()).inAdapterView(withId(R.id.mobile_list)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.mobile_list)).atPosition(1).perform(click());
+        onView( withId(R.id.start)). perform ( click());
 
     }
 
