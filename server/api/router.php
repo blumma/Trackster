@@ -29,7 +29,7 @@
 
       default:
         // TODO: delegate request to appropirate service -> e.g. user-service.php
-        rest_error_response('wrong method');
+        rest_error_response('Action not found!');
         break;
     }
   }

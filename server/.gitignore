@@ -3,5 +3,5 @@
 !/logs/README.md
 *.log
 .DS_Store
-/api/config/development.php
+/api/config/config.php
 /uploads/*
