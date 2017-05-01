@@ -39,6 +39,7 @@
     }
 
     $json = json_encode($res);
+    header('Content-Type: application/json');
     http_response_code(200);
     echo $json;
   }
@@ -59,6 +60,7 @@
     }
 
     $json = json_encode($res);
+    header('Content-Type: application/json');
     http_response_code($status);
     echo $json;
   }
