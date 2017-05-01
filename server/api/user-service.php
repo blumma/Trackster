@@ -21,7 +21,7 @@
 
     if ($user_result->num_rows > 0) {
       $user = $user_result->fetch_assoc();
-      // @mblum TODO: set SESSION vars!
+      $_SESSION['user'] = $user;
       rest_response($user);
     }
     else {

@@ -28,6 +28,12 @@
         rest_response('register');
         break;
 
+      case 'restricted':
+        is_logged_in(function() {
+          rest_response('User must be logged in to reach this point.');
+        });        
+        break;
+
       default:
         // TODO: delegate request to appropirate service -> e.g. user-service.php
         rest_error_response('Action not found!');

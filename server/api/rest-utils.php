@@ -65,4 +65,17 @@
     echo $json;
   }
 
+
+  function is_logged_in($callback) {
+
+    if (isset($_SESSION['user'])) {
+      if (is_callable($callback)) {
+        $callback();
+      }
+    }
+    else {
+      rest_error_response('Not logged in.', 401);
+    }
+  }
+
 ?>
