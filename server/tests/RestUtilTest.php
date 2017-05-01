@@ -1,5 +1,7 @@
 <?php
 
+require __dir__ . '/../api/rest-utils.php';
+
 class RestUtilTest extends PHPUnit_Framework_TestCase {
 
   private $http;
@@ -18,17 +20,47 @@ class RestUtilTest extends PHPUnit_Framework_TestCase {
 
 
   public function test_parse_request() {
-    // @mblum TODO
+    // @mblum TODO: untestable due to php://input is read-only, maybe we can find
+    //              a workaround?!
   }
 
 
+  /**
+   * @runInSeparateProcess
+   */
   public function test_rest_response() {
-    // @mblum TODO
+    
+    $data = array(
+      'param1' => 'param1',
+      'param2' => 'param2',
+      'array1' => [
+        'array_param1' => 'array_param1'
+      ]
+    );
+
+    $respose_data = array();
+    $respose_data['data'] = $data;
+
+    $this->expectOutputString(json_encode($respose_data));
+    rest_response($data);
+    $this->assertEquals(200, http_response_code());
+    
   }
 
 
+  /**
+   * @runInSeparateProcess
+   */
   public function test_rest_error_response() {
-    // @mblum TODO
+
+    $message = 'An error occurred!';
+
+    $respose_data = array();
+    $respose_data['message'] = $message;
+
+    $this->expectOutputString(json_encode($respose_data));
+    rest_error_response($message);
+    $this->assertEquals(500, http_response_code());
   }
 
 }
