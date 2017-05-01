@@ -14,12 +14,13 @@
   function route_request($request) {
 
     $action = $request['payload']['action'];
+    $data = $request['payload']['data'];
 
     switch ($action) {
       
       case 'login':
         // TODO: use namespaces here
-        login($request);
+        login($data);
         break;
       
       case 'register':
