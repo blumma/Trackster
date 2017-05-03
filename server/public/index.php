@@ -11,6 +11,7 @@
   require_once __DIR__ . '/../api/db-handler.php';
 
 
+  session_start();
   
 
   /* **** Main entry point ************************************************** */

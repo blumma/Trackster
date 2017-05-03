@@ -1,6 +1,7 @@
 <?php
 
 require __dir__ . '/../api/rest-utils.php';
+require __dir__ . '/../api/router.php';
 
 class RestUtilTest extends PHPUnit_Framework_TestCase {
 
@@ -61,6 +62,46 @@ class RestUtilTest extends PHPUnit_Framework_TestCase {
     $this->expectOutputString(json_encode($respose_data));
     rest_error_response($message);
     $this->assertEquals(500, http_response_code());
+  }
+
+
+  /**
+   * @runInSeparateProcess
+   */
+  public function test_restricted_request() {
+
+    $request = array();
+    $request['payload'] = array(
+      'action' => 'restricted',
+      'data' => ''
+    );
+
+    $respose_data = array(
+      'message' => 'Not logged in.'
+    );    
+
+    $this->expectOutputString(json_encode($respose_data));
+    route_request($request);
+    $this->assertEquals(401, http_response_code());
+  }
+
+
+  /**
+   * @runInSeparateProcess
+   */
+  public function test_is_logged_in() {
+
+    $respose_data = array(
+      'message' => 'Not logged in.'
+    );    
+
+    $this->expectOutputString(json_encode($respose_data));
+
+    is_logged_in(function() {
+      $this->assertFalse(true);
+    });
+
+    $this->assertEquals(401, http_response_code());
   }
 
 }

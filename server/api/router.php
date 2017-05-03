@@ -14,17 +14,24 @@
   function route_request($request) {
 
     $action = $request['payload']['action'];
+    $data = $request['payload']['data'];
 
     switch ($action) {
       
       case 'login':
         // TODO: use namespaces here
-        login($request);
+        login($data);
         break;
       
       case 'register':
         // TODO: delegate request to appropirate service -> e.g. user-service.php
         rest_response('register');
+        break;
+
+      case 'restricted':
+        is_logged_in(function() {
+          rest_response('User must be logged in to reach this point.');
+        });        
         break;
 
       default:
