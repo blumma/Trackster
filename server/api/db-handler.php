@@ -20,7 +20,7 @@
           die("Failed to connect to Database: " . self::$dbh->connect_error);
         }
       }
-
+      
       return self::$dbh;
     }
 

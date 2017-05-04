@@ -12,6 +12,7 @@
         "test": "phpunit"
     },
     "require": {
+        "slim/slim": "^3.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.2",
