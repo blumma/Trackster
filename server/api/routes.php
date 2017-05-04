@@ -1,5 +1,7 @@
 <?php
 
+require __dir__ . '/db-handler.php';
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -20,6 +22,22 @@ function sendRestResponse($response, $data = "", $status = 200) {
     ->withHeader('Content-Type', 'application/json')
     ->withStatus($status)
     ->write($json);
+}
+
+
+/**
+ * sendErrorReponse()
+ *
+ * Send error response, with json content type and default 500 status
+ * response data is wrapped in message field
+ *
+ */
+function sendErrorReponse($response, $message = "", $status = 500) {
+  $data = array(
+      'message' => $message
+    );
+
+  return sendRestResponse($response, $data, $status);
 }
 
 
@@ -51,7 +69,7 @@ $app->get('/api/users', function ($request, $response, $args) {
       'firstName' => 'mathias',
       'lastName' => 'blum',
       'email' => 'mathias.blum@student.tugraz.at',
-      'created_at' => '2017-05-01'
+      'createdAt' => '2017-05-01'
     )
   );
 
@@ -60,7 +78,7 @@ $app->get('/api/users', function ($request, $response, $args) {
       'firstName' => 'max',
       'lastName' => 'mustermann',
       'email' => 'max.mustermann@student.tugraz.at',
-      'created_at' => '2017-04-01'
+      'createdAt' => '2017-04-01'
     )
   );
 
@@ -69,9 +87,37 @@ $app->get('/api/users', function ($request, $response, $args) {
       'firstName' => 'bat',
       'lastName' => 'man',
       'email' => 'batman@student.tugraz.at',
-      'created_at' => '2017-04-10'
+      'createdAt' => '2017-04-10'
     )
   );
+
+  return sendRestResponse($response, $users);
+});
+
+
+/**
+ * GET /api/users
+ *
+ * Get all Users
+ *
+ */
+$app->get('/api/usersFromDb', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $users_stmt = $dbh->prepare("SELECT id, firstName, lastName, email, "
+    . "createdAt FROM users;");
+  
+  if (!$users_stmt->execute()) {
+    return sendErrorReponse($response, $users_stmt->error);
+  } 
+  
+  $users_result = $users_stmt->get_result();
+  
+  $users = array();
+
+  while($row = $users_result->fetch_assoc()) {
+    array_push($users, $row);
+  }
 
   return sendRestResponse($response, $users);
 });
