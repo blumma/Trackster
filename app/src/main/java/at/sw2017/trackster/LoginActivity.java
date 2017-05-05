@@ -1,5 +1,6 @@
 package at.sw2017.trackster;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
                     User user = response.body();
                     Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
                     // @mblum TODO: got to main menu
+                    Intent k = new Intent(LoginActivity.this, MenuActivity.class);
+                    startActivity(k);
+
                     // @mblum TODO: session management
                 } else {
                     Toast.makeText(getApplication(), "Login failed!", Toast.LENGTH_SHORT).show();
