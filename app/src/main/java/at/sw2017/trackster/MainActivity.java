@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -28,11 +29,42 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(getApplication(), "Check login", Toast.LENGTH_SHORT).show();
+                EditText editTextEmail = (EditText) findViewById(R.id.edit_text_username);
+                EditText editTextPwd = (EditText) findViewById(R.id.edit_text_password);
+
+                User loginCredentials = new User();
+                loginCredentials.setEmail(editTextEmail.getText().toString());
+                loginCredentials.setPwd(editTextPwd.getText().toString());
+
+                login(loginCredentials);
             }
         });
+    }
 
-        fetchUsers();
+    private void login(User loginCredentials) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<User> call = apiService.login(loginCredentials);
+        call.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User>call, Response<User> response) {
+                if(response.isSuccessful()) {
+                    User user = response.body();
+                    Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
+                    // @mblum TODO: got to main menu
+                    // @mblum TODO: session management
+                } else {
+                    Toast.makeText(getApplication(), "Login failed!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User>call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void fetchUsers() {

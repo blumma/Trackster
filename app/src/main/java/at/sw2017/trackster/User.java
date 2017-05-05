@@ -7,13 +7,30 @@ import java.util.Date;
  */
 
 public class User {
+
     private int id;
     private String firstName;
     private String lastName;
     private String email;
+    private String pwd;
     private Date createdAt;
 
     public User() {
+
+    }
+
+    public User(String email, String pwd) {
+        this.email = email;
+        this.pwd = pwd;
+    }
+
+    public User(int id, String firstName, String lastName, String email, String pwd, Date createdAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.pwd = pwd;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -46,6 +63,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public Date getCreatedAt() {
