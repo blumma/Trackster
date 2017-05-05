@@ -44,8 +44,9 @@ public class ExampleUnitTest {
         server.start();
 
         HttpUrl baseUrl = server.url("/tracksterMockServer/");
+        ApiClient.BASE_URL = baseUrl.toString();
 
-        ApiInterface apiService = ApiClient.getClient(baseUrl).create(ApiInterface.class);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<List<User>> call = apiService.getUsers();
         call.execute();
