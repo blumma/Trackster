@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class LoginActivityTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -43,8 +43,8 @@ public class ExampleInstrumentedTest {
     }
 
     @Rule
-    public ActivityTestRule<MainActivity> menuActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<LoginActivity> menuActivityTestRule =
+            new ActivityTestRule<>(LoginActivity.class, true, true);
 
     @Test
     public void testLoginSuccess() throws Exception {

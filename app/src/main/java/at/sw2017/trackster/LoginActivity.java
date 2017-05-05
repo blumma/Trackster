@@ -8,17 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,26 +63,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         });
-    }
-
-    private void fetchUsers() {
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-        Call<List<User>> call = apiService.getUsers();
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>>call, Response<List<User>> response) {
-                List<User> users = response.body();
-                Log.d(TAG, "Number of user received: " + users.size());
-            }
-
-            @Override
-            public void onFailure(Call<List<User>>call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-            }
-        });
-
     }
 }
