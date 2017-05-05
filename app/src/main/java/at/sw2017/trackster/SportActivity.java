@@ -13,7 +13,7 @@ public class SportActivity extends AppCompatActivity {
 
         System.out.println("do i get here2");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sport_screen);
+        setContentView(R.layout.activity_sport_screen);
 
         final Button button = (Button) findViewById(R.id.button_60m);
         button.setOnClickListener(new View.OnClickListener() {

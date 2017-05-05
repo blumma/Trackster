@@ -40,7 +40,7 @@ public class StopWatchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stopwatch);
+        setContentView(R.layout.activity_stopwatch);
 
         textView = (TextView)findViewById(R.id.textView);
         start = (Button)findViewById(R.id.button);

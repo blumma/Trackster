@@ -9,13 +9,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -24,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class StudentTest {
+public class SportsActivityTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -34,17 +30,16 @@ public class StudentTest {
     }
 
     @Rule
-    public ActivityTestRule<StudentActivity> menuActivityTestRule =
-            new ActivityTestRule<>(StudentActivity.class, true, true);
+    public ActivityTestRule<SportActivity> menuActivityTestRule =
+            new ActivityTestRule<>(SportActivity.class, true, true);
 
     @Test
-    public void testListView()
+    public void testSportsButtons()
     {
-        onView(withId(R.id.simpleSearchView)).perform(typeText("Jan"), closeSoftKeyboard());
-        onData(anything()).inAdapterView(withId(R.id.mobile_list)).atPosition(0).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.mobile_list)).atPosition(1).perform(click());
-        onView( withId(R.id.start)). perform ( click());
-
+        onView( withId(R.id.button_throw)). perform ( click());
+        onView( withId(R.id.button_weitsprung)). perform ( click());
+        onView( withId(R.id.button_1000m)). perform ( click());
+        onView( withId(R.id.button_60m)). perform ( click());
     }
 
 }
