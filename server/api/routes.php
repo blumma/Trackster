@@ -122,5 +122,30 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
   return sendRestResponse($response, $users);
 });
 
+/**
+ * GET /api/schueler
+ *
+ * Get all Schueler
+ *
+ */
+$app->get('/api/schuelerFromDb', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, geschlecht, geburtsdatum, 60m_run, 1000m_run, shot_put, long_throw, long_jump, sum_points FROM schueler");
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  } 
+  
+  $result = $stmt->get_result();
+  
+  $schueler = array();
+
+  while($row = $result->fetch_assoc()) {
+    array_push($schueler, $row);
+  }
+
+  return sendRestResponse($response, $schueler);
+});
 
 ?>
