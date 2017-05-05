@@ -17,7 +17,7 @@ $isLoggedIn = function($request, $response, $next) {
     return $next($request, $response);
   }
 
-  return sendErrorReponse($response, "Not authenticated.", 401);
+  return sendErrorReponse($response, "Not Authenticated.", 401);
 };
 
 ?>
