@@ -1,4 +1,4 @@
-package at.sw2017.trackster;
+package at.sw2017.trackster.api;
 
 import okhttp3.HttpUrl;
 import retrofit2.Retrofit;

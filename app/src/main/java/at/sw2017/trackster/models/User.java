@@ -1,4 +1,4 @@
-package at.sw2017.trackster;
+package at.sw2017.trackster.models;
 
 import java.util.Date;
 

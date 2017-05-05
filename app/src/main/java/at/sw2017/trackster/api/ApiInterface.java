@@ -1,7 +1,8 @@
-package at.sw2017.trackster;
+package at.sw2017.trackster.api;
 
 import java.util.List;
 
+import at.sw2017.trackster.models.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
