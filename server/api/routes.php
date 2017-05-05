@@ -16,7 +16,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  */
 function sendRestResponse($response, $data = "", $status = 200) {
 
-  $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
+  $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);  
   
   return $response
     ->withHeader('Content-Type', 'application/json')
@@ -50,6 +50,78 @@ function sendErrorReponse($response, $message = "", $status = 500) {
 $app->get('/api', function ($request, $response, $args) {
   $response->getBody()->write(' Hello Trackster ');
   return $response;
+});
+
+
+/**
+ * POST /api/logout
+ *
+ * Logout the current user. Delete all session data.
+ *
+ */
+$app->post('/api/logout', function ($request, $response, $args) {
+  session_destroy();
+  return sendRestResponse($response);
+});
+
+
+/**
+ * GET /api/isLoggedIn
+ *
+ * Check if the current user has a valid session.
+ *
+ */
+$app->get('/api/isLoggedIn', function ($request, $response, $args) {
+
+  if (isset($_SESSION['user'])) {
+    return sendRestResponse($response, $_SESSION['user']);
+  }
+  else {
+    return sendErrorReponse($response, "Not Authenticated.", 401);
+  }
+});
+
+
+/**
+ * POST /api/login
+ *
+ * Login the current user. Set session to current user.
+ *
+ */
+$app->post('/api/login', function($request, $response, $args) {
+
+  $parsedBody = $request->getParsedBody();
+
+  $pwd = '';
+  $email = '';
+
+  if (isset($parsedBody['pwd'])) $pwd = $parsedBody['pwd'];
+  if (isset($parsedBody['email'])) $email = $parsedBody['email'];
+
+  $dbh = DbHandler::getDbh();
+
+  $user_stmt = $dbh->prepare("SELECT id, firstName, lastName, email, "
+    . "createdAt FROM users WHERE email=? AND pwd=? LIMIT 1");
+
+  $user_stmt->bind_param("ss", $email, $pwd);
+  
+  if (!$user_stmt->execute()) {
+    unset($_SESSION['user']);
+    return sendErrorReponse($response, $user_stmt->error);
+  } 
+  
+  $users_result = $user_stmt->get_result();
+
+  if ($users_result->num_rows <= 0) {
+    unset($_SESSION['user']);
+    return sendErrorReponse($response, "Login Failed.", 401);
+  }
+
+  $user = $users_result->fetch_assoc();
+
+  $_SESSION['user'] = $user;
+
+  return sendRestResponse($response, $user);
 });
 
 
@@ -121,6 +193,7 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
 
   return sendRestResponse($response, $users);
 });
+
 
 /**
  * GET /api/schueler
