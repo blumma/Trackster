@@ -6,7 +6,7 @@
 
     // Singleton -> make constructor private!
     private function __construct() {
-
+    
     }
 
     static function getDbh() {
@@ -20,10 +20,9 @@
           die("Failed to connect to Database: " . self::$dbh->connect_error);
         }
       }
-
+      
       return self::$dbh;
     }
-
   }
   
 ?>

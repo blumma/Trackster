@@ -1,26 +1,22 @@
 <?php 
   
-  // Load configuration
-  require_once __DIR__ . '/../api/config.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-  // load rest support
-  require_once __DIR__ . '/../api/rest-utils.php';
-  require_once __DIR__ . '/../api/router.php';
+require __DIR__ . '/../api/config.php';
 
-  // establish db connection
-  require_once __DIR__ . '/../api/db-handler.php';
+session_start();
 
+// Instantiate the app
+$app = new \Slim\App();
 
+<<<<<<< HEAD
   session_start();
   
+=======
+// Register routes
+require __DIR__ . '/../api/routes.php';
+>>>>>>> origin/develop
 
-  /* **** Main entry point ************************************************** */
-  try {
-    $req = parse_request();
-    route_request($req);
-  }
-  catch(Exception $e) {
-    rest_error_response('Oh, something went wrong.');
-  }
+$app->run();
  
 ?>
