@@ -38,7 +38,7 @@ public class SportsActivityTest {
     {
         onView( withId(R.id.button_throw)). perform ( click());
         onView( withId(R.id.button_weitsprung)). perform ( click());
-        onView( withId(R.id.button_ranking)). perform ( click());
+        onView( withId(R.id.button_1000m)). perform ( click());
         onView( withId(R.id.button_60m)). perform ( click());
     }
 

@@ -12,14 +12,41 @@ public class SportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sport_screen);
+        setContentView(R.layout.activity_sport);
 
-        final Button button = (Button) findViewById(R.id.button_60m);
-        button.setOnClickListener(new View.OnClickListener() {
+        setupSportsEventHandler();
+    }
+
+    private void setupSportsEventHandler() {
+
+        final Button buttonThrow = (Button) findViewById(R.id.button_throw);
+        buttonThrow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), StudentListActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
 
+        final Button button60m = (Button) findViewById(R.id.button_60m);
+        button60m.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), StudentListActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
 
-                Intent myIntent = new Intent(v.getContext(), StudentActivity.class);
+        final Button buttonWeitsprung = (Button) findViewById(R.id.button_weitsprung);
+        buttonWeitsprung.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), StudentListActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        final Button button1000m = (Button) findViewById(R.id.button_1000m);
+        button1000m.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), StudentListActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

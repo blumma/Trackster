@@ -34,8 +34,8 @@ public class StudentActivityTest {
     }
 
     @Rule
-    public ActivityTestRule<StudentActivity> menuActivityTestRule =
-            new ActivityTestRule<>(StudentActivity.class, true, true);
+    public ActivityTestRule<StudentListActivity> menuActivityTestRule =
+            new ActivityTestRule<>(StudentListActivity.class, true, true);
 
     @Test
     public void testListView()

@@ -36,7 +36,7 @@ public class MenuActivityTest {
     @Test
     public void testMenuButton()
     {
-        onView( withId(R.id.button_ranking)). perform ( click());
+        onView( withId(R.id.button_1000m)). perform ( click());
         onView( withId(R.id.button_logout)). perform ( click());
         onView( withId(R.id.button_input)). perform ( click());
     }

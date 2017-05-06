@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
-import at.sw2017.trackster.models.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +68,7 @@ public class MenuActivity extends AppCompatActivity {
         });
 
 
-        final Button buttonRanking = (Button) findViewById(R.id.button_ranking);
+        final Button buttonRanking = (Button) findViewById(R.id.button_1000m);
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), RankingActivity.class);
