@@ -2,6 +2,7 @@ package at.sw2017.trackster.api;
 
 import java.util.List;
 
+import at.sw2017.trackster.models.Student;
 import at.sw2017.trackster.models.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,4 +27,7 @@ public interface ApiInterface {
 
     @POST("/api/logout")
     Call<ResponseBody> logout();
+
+    @GET("/api/students")
+    Call<List<Student>> getStudents();
 }
