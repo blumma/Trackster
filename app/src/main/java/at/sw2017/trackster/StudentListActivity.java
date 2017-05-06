@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import at.sw2017.trackster.api.ApiClient;
@@ -42,9 +45,10 @@ public class StudentListActivity extends Activity {
                 if(response.isSuccessful()) {
 
                     List<Student> students = response.body();
-
-                    Toast.makeText(getApplication(), "Successfully loaded students!", Toast.LENGTH_SHORT).show();
-                    // @mblum TODO: add students to list view
+                    populateStudentList(students);
+                }
+                else {
+                    Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -53,6 +57,20 @@ public class StudentListActivity extends Activity {
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    private void populateStudentList(List<Student> students) {
+
+        String[] strStudents = new String[students.size()];
+        int i = 0;
+
+        for (Student s: students) {
+            strStudents[i++] = (s.getVorname() + " " + s.getNachname());
+        }
+        // @mblum TODO: implement custom adapter to support StudentsList
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.student_list_item, strStudents);
+        ListView studentList = (ListView) findViewById(R.id.student_list);
+        studentList.setAdapter(adapter);
     }
 }
 
