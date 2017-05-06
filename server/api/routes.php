@@ -180,7 +180,7 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
  * Get all Schueler
  *
  */
-$app->get('/api/schuelerFromDb', function ($request, $response, $args) {
+$app->get('/api/schueler', function ($request, $response, $args) {
 
   $dbh = DbHandler::getDbh();
   $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, geschlecht, geburtsdatum, 60m_run, 1000m_run, shot_put, long_throw, long_jump, sum_points FROM schueler");
