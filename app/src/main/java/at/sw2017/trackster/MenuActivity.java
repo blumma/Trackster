@@ -68,13 +68,13 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: add further buttons
-        /*final Button buttonRanking = (Button) findViewById(R.id.button_ranking);
-        buttonInput.setOnClickListener(new View.OnClickListener() {
+
+        final Button buttonRanking = (Button) findViewById(R.id.button_ranking);
+        buttonRanking.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), SportActivity.class);
+                Intent myIntent = new Intent(v.getContext(), RankingActivity.class);
                 startActivityForResult(myIntent, 0);
             }
-        });*/
+        });
     }
 }

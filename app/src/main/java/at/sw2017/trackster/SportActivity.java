@@ -11,7 +11,6 @@ public class SportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        System.out.println("do i get here2");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_screen);
 

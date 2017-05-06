@@ -24,7 +24,7 @@ public class StudentActivity extends Activity {
         setContentView(R.layout.activity_choose_student);
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, mobileArray);
+                R.layout.activity_ranking, mobileArray);
 
         final ListView listView = (ListView) findViewById(R.id.mobile_list);
         listView.setAdapter(adapter);
