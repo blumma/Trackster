@@ -175,15 +175,18 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
 
 
 /**
- * GET /api/schueler
+ * GET /api/students
  *
- * Get all Schueler
+ * Get all students
  *
  */
-$app->get('/api/schueler', function ($request, $response, $args) {
+$app->get('/api/students', function ($request, $response, $args) {
 
   $dbh = DbHandler::getDbh();
-  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, geschlecht, geburtsdatum, 60m_run, 1000m_run, shot_put, long_throw, long_jump, sum_points FROM schueler");
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, "
+    . "geschlecht, geburtsdatum, performance60mRun, performance1000mRun, "
+    . "performanceShotPut, performanceLongThrow, performanceLongJump, "
+    . "sumPoints FROM students");
   
   if (!$stmt->execute()) {
     return sendErrorReponse($response, $stmt->error);
@@ -191,13 +194,13 @@ $app->get('/api/schueler', function ($request, $response, $args) {
   
   $result = $stmt->get_result();
   
-  $schueler = array();
+  $students = array();
 
   while($row = $result->fetch_assoc()) {
-    array_push($schueler, $row);
+    array_push($students, $row);
   }
 
-  return sendRestResponse($response, $schueler);
+  return sendRestResponse($response, $students);
 });
 
 ?>

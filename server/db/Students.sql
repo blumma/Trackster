@@ -1,4 +1,4 @@
-CREATE TABLE `schueler` (
+CREATE TABLE `students` (
   `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,  
   `kennzahl` varchar(14) NOT NULL,
   `klasse` varchar(3) NOT NULL,
@@ -6,15 +6,15 @@ CREATE TABLE `schueler` (
   `vorname` varchar(32) NOT NULL,
   `geschlecht` char(1) NOT NULL,
   `geburtsdatum` date NOT NULL,
-  `60m_run` double DEFAULT NULL,
-  `1000m_run` double DEFAULT NULL,
-  `shot_put` double DEFAULT NULL,
-  `long_throw` double DEFAULT NULL,
-  `long_jump` double DEFAULT NULL,
-  `sum_points` double DEFAULT NULL
+  `performance60mRun` double DEFAULT NULL,
+  `performance1000mRun` double DEFAULT NULL,
+  `performanceShotPut` double DEFAULT NULL,
+  `performanceLongThrow` double DEFAULT NULL,
+  `performanceLongJump` double DEFAULT NULL,
+  `sumPoints` double DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `schueler` (`kennzahl`, `klasse`, `nachname`, `vorname`, `geschlecht`, `geburtsdatum`, `60m_run`, `1000m_run`, `shot_put`, `long_throw`, `long_jump`, `sum_points`) VALUES
+INSERT INTO `students` (`kennzahl`, `klasse`, `nachname`, `vorname`, `geschlecht`, `geburtsdatum`, `performance60mRun`, `performance1000mRun`, `performanceShotPut`, `performanceLongThrow`, `performanceLongJump`, `sumPoints`) VALUES
 ('10047099955719', '1e', 'Ashborne', 'Andra', 'm', '2006-04-05', 99, 3599, 0, 0, 0, 0),
 ('10067084861159', '1e', 'Terbrug', 'Haven', 'w', '2006-04-03', 99, 3599, 0, 0, 0, 0),
 ('10263997594987', '1e', 'McGillacoell', 'Gayler', 'w', '2006-03-31', 99, 3599, 0, 0, 0, 0),
@@ -594,7 +594,7 @@ INSERT INTO `schueler` (`kennzahl`, `klasse`, `nachname`, `vorname`, `geschlecht
 ('64118151595749', '4d', 'Rhule', 'Isador', 'w', '2002-07-11', 99, 3599, 0, 0, 0, 0),
 ('64181433692024', '4d', 'Cheake', 'Pearline', 'w', '2002-07-07', 99, 3599, 0, 0, 0, 0),
 ('64341953637964', '4d', 'Thumnel', 'Donia', 'w', '2002-07-04', 99, 3599, 0, 0, 0, 0);
-INSERT INTO `schueler` (`kennzahl`, `klasse`, `nachname`, `vorname`, `geschlecht`, `geburtsdatum`, `60m_run`, `1000m_run`, `shot_put`, `long_throw`, `long_jump`, `sum_points`) VALUES
+INSERT INTO `students` (`kennzahl`, `klasse`, `nachname`, `vorname`, `geschlecht`, `geburtsdatum`, `performance60mRun`, `performance1000mRun`, `performanceShotPut`, `performanceLongThrow`, `performanceLongJump`, `sumPoints`) VALUES
 ('64407402827989', '4d', 'Gazzard', 'Jacinda', 'w', '2002-06-30', 99, 3599, 0, 0, 0, 0),
 ('64438754225985', '4d', 'Olivelli', 'Ira', 'm', '2002-06-29', 99, 3599, 0, 0, 0, 0),
 ('64512086888930', '4d', 'Martinet', 'Lynda', 'w', '2002-06-27', 99, 3599, 0, 0, 0, 0),
