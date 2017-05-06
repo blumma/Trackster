@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<List<User>> call = apiService.getUsers();
+
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>>call, Response<List<User>> response) {
