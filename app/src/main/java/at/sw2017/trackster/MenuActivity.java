@@ -28,18 +28,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-
-        final ImageButton button = (ImageButton) findViewById(R.id.imageButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent k = new Intent(MenuActivity.this, StudentActivity.class);
-                startActivity(k);
-
-            }
-        });
-
-
         initMenuButtonHandler();
 
         final Button buttonLogout = (Button) findViewById(R.id.button_logout);
