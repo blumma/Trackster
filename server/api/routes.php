@@ -205,9 +205,9 @@ $app->get('/api/students', function ($request, $response, $args) {
 
 
 /**
- * GET /api/students
+ * GET /api/student/{id}
  *
- * Get all students
+ * Get specific student by id
  *
  */
 $app->get('/api/student/{id}', function ($request, $response, $args) {
@@ -232,6 +232,47 @@ $app->get('/api/student/{id}', function ($request, $response, $args) {
 
   $student = $result->fetch_assoc();
   return sendRestResponse($response, $student);
+});
+
+
+/**
+ * POST /api/student/{id}
+ *
+ * Save changed of specific student to DB.
+ *
+ */
+$app->post('/api/student/{id}', function ($request, $response, $args) {
+
+  $student = $request->getParsedBody();
+
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("UPDATE students SET klasse = ?, nachname = ?, "
+    . "vorname = ?, geschlecht = ?, geburtsdatum = ?, performance60mRun = ?, "
+    . "performance1000mRun = ?, performanceShotPut = ?, "
+    . "performanceLongThrow = ?, performanceLongJump = ?, sumPoints = ? "
+    . "WHERE id = ?");
+
+  $stmt->bind_param("sssssddddddi", 
+      $student['klasse'], 
+      $student['nachname'], 
+      $student['vorname'],
+      $student['geschlecht'],
+      $student['geburtsdatum'],
+      $student['performance60mRun'],
+      $student['performance1000mRun'],
+      $student['performanceShotPut'],
+      $student['performanceLongThrow'],
+      $student['performanceLongJump'],
+      $student['sumPoints'],
+      $args['id']
+    );
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  return sendRestResponse($response);
 });
 
 ?>

@@ -100,6 +100,51 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('Student not found.', $response_data['message']);
   }
 
+  public function test_update_student_by_id() {
+
+    $student = array(
+      "id" => 1,
+      "kennzahl" => 10047099955719,
+      "klasse" => "1e",
+      "nachname" => "Ashborne",
+      "vorname" => "Andra",
+      "geschlecht" => "m",
+      "geburtsdatum" => date("Y-m-d"), // H:i:s
+      "performance60mRun" => 99,
+      "performance1000mRun" => 3599,
+      "performanceShotPut" => 0,
+      "performanceLongThrow" => 0,
+      "performanceLongJump" => 0,
+      "sumPoints" => 0
+    );
+
+    $response = $this->http->request('POST', '/api/student/1', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => $student
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response = $this->http->request('GET', '/api/student/1', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response_data = json_decode($response->getBody(), true);
+    $this->assertEquals(json_encode($student), json_encode($response_data));
+  }
+
 }
 
 ?>
