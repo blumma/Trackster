@@ -109,7 +109,7 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
       "nachname" => "Ashborne",
       "vorname" => "Andra",
       "geschlecht" => "m",
-      "geburtsdatum" => date("Y-m-d"), // H:i:s
+      "geburtsdatum" => format('d.m.Y'), // H:i:s
       "performance60mRun" => 99,
       "performance1000mRun" => 3599,
       "performanceShotPut" => 0,

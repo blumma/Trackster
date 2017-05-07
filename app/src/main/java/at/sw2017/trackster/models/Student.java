@@ -14,9 +14,9 @@ public class Student {
     private String nachname;
     private String vorname;
     private String geschlecht;
-    private Date geburtsdatum;
-    private double performance60m;
-    private double performance1000m;
+    private String geburtsdatum;
+    private double performance60mRun;
+    private double performance1000mRun;
     private double performanceShotPut;
     private double performanceLongThrow;
     private double performanceLongJump;
@@ -29,7 +29,7 @@ public class Student {
         this.id = id;
     }
 
-    public Student(int id, String kennzahl, String klasse, String nachname, String vorname, String geschlecht, Date geburtsdatum) {
+    public Student(int id, String kennzahl, String klasse, String nachname, String vorname, String geschlecht, String geburtsdatum) {
         this.id = id;
         this.kennzahl = kennzahl;
         this.klasse = klasse;
@@ -87,28 +87,12 @@ public class Student {
         this.geschlecht = geschlecht;
     }
 
-    public Date getGeburtsdatum() {
+    public String getGeburtsdatum() {
         return geburtsdatum;
     }
 
-    public void setGeburtsdatum(Date geburtsdatum) {
+    public void setGeburtsdatum(String geburtsdatum) {
         this.geburtsdatum = geburtsdatum;
-    }
-
-    public double getPerformance60m() {
-        return performance60m;
-    }
-
-    public void setPerformance60m(double performance60m) {
-        this.performance60m = performance60m;
-    }
-
-    public double getPerformance1000m() {
-        return performance1000m;
-    }
-
-    public void setPerformance1000m(double performance1000m) {
-        this.performance1000m = performance1000m;
     }
 
     public double getPerformanceShotPut() {
@@ -133,6 +117,22 @@ public class Student {
 
     public void setPerformanceLongJump(double performanceLongJump) {
         this.performanceLongJump = performanceLongJump;
+    }
+
+    public double getPerformance60mRun() {
+        return performance60mRun;
+    }
+
+    public void setPerformance60mRun(double performance60mRun) {
+        this.performance60mRun = performance60mRun;
+    }
+
+    public double getPerformance1000mRun() {
+        return performance1000mRun;
+    }
+
+    public void setPerformance1000mRun(double performance1000mRun) {
+        this.performance1000mRun = performance1000mRun;
     }
 
     public double getSumPoints() {

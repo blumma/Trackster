@@ -252,7 +252,7 @@ $app->post('/api/student/{id}', function ($request, $response, $args) {
     . "performance1000mRun = ?, performanceShotPut = ?, "
     . "performanceLongThrow = ?, performanceLongJump = ?, sumPoints = ? "
     . "WHERE id = ?");
-
+  
   $stmt->bind_param("sssssddddddi", 
       $student['klasse'], 
       $student['nachname'], 

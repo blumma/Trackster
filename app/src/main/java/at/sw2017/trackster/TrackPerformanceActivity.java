@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
@@ -36,8 +39,14 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         Button btnSavePerformance = (Button) findViewById(R.id.btn_save_performance);
         btnSavePerformance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Student student = getStudentDataFromView(currentStudentId);
-                saveStudentPerformance(student);
+                Student student = null;
+                try {
+                    student = getStudentDataFromView(currentStudentId);
+                    saveStudentPerformance(student);
+                } catch (ParseException e) {
+                    Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -56,7 +65,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                     populateStudentView(student);
                 }
                 else {
-                    Toast.makeText(getApplication(), "Error while loading student data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Error while loading student data! (dd-MM-yyyy)", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -73,28 +82,35 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         txtVorname.setText(student.getVorname());
 
         EditText txtNachname = (EditText) findViewById(R.id.txt_nachname);
+        Log.d(TAG, student.getNachname());
         txtNachname.setText(student.getNachname());
 
         EditText txtKlasse = (EditText) findViewById(R.id.txt_klasse);
+        Log.d(TAG, student.getKlasse());
         txtKlasse.setText(student.getKlasse());
 
         EditText txtGeschlecht = (EditText) findViewById(R.id.txt_geschlecht);
+        Log.d(TAG, student.getGeschlecht());
         txtGeschlecht.setText(student.getGeschlecht());
 
         EditText txtGebdatum = (EditText) findViewById(R.id.date_gebdatum);
-        txtGebdatum.setText(student.getGeburtsdatum().toString());
+        Log.d(TAG, student.getGeburtsdatum());
+        txtGebdatum.setText(student.getGeburtsdatum());
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
-        txt60m.setText(String.valueOf(student.getPerformance60m()));
+        Log.d(TAG, String.valueOf(student.getPerformance60mRun()));
+        txt60m.setText(String.valueOf(student.getPerformance60mRun()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
-        txt1000m.setText(String.valueOf(student.getPerformance1000m()));
+        Log.d(TAG, String.valueOf(student.getPerformance1000mRun()));
+        txt1000m.setText(String.valueOf(student.getPerformance1000mRun()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
+        Log.d(TAG, String.valueOf(student.getPerformanceLongJump()));
         txtLongjump.setText(String.valueOf(student.getPerformanceLongJump()));
     }
 
-    private Student getStudentDataFromView(int studentId) {
+    private Student getStudentDataFromView(int studentId) throws ParseException {
 
         Student student = new Student(studentId);
 
@@ -111,13 +127,13 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         student.setGeschlecht(txtGeschlecht.getText().toString());
 
         EditText txtGebdatum = (EditText) findViewById(R.id.date_gebdatum);
-        student.setGeburtsdatum(new Date(txtGebdatum.getText().toString()));
+        student.setGeburtsdatum(txtGebdatum.getText().toString());
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
-        student.setPerformance60m(Double.parseDouble(txt60m.getText().toString()));
+        student.setPerformance60mRun(Double.parseDouble(txt60m.getText().toString()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
-        student.setPerformance1000m(Double.parseDouble(txt1000m.getText().toString()));
+        student.setPerformance1000mRun(Double.parseDouble(txt1000m.getText().toString()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         student.setPerformanceLongJump(Double.parseDouble(txtLongjump.getText().toString()));
