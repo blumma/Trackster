@@ -33,7 +33,10 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_performance);
 
         // @mblum TODO: get student id from previously selected student
-        final int currentStudentId = 1;
+        Intent myIntent = getIntent(); // gets the previously created intent
+        String studentId = myIntent.getStringExtra("studentId");
+
+        final int currentStudentId = Integer.parseInt(studentId);
         loadStudentById(currentStudentId);
 
         Button btnSavePerformance = (Button) findViewById(R.id.btn_save_performance);

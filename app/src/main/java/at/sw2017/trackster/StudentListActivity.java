@@ -79,10 +79,16 @@ public class StudentListActivity extends AppCompatActivity {
         studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // @mblum TODO: retreive id from custom adapter -> this will not work proberly!
+                int selectedStudentId = (int)id + 1;
+
                 Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
+                k.putExtra("studentId", "" + selectedStudentId);
                 startActivity(k);
-                String currentStudent = String.valueOf(parent.getItemAtPosition(position));
-                Toast.makeText(getApplication(), "Clicked Item: " + currentStudent, Toast.LENGTH_SHORT).show();
+
+                /*String currentStudent = String.valueOf(parent.getItemAtPosition(position));
+                Toast.makeText(getApplication(), "Clicked Item: " + currentStudent, Toast.LENGTH_SHORT).show();*/
             }
         });
     }
