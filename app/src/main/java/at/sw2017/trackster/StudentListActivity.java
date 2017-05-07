@@ -6,8 +6,12 @@ package at.sw2017.trackster;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StudentListActivity extends Activity {
+public class StudentListActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -67,10 +71,20 @@ public class StudentListActivity extends Activity {
         for (Student s: students) {
             strStudents[i++] = (s.getVorname() + " " + s.getNachname());
         }
-        // @mblum TODO: implement custom adapter to support StudentsList
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.student_list_item, strStudents);
+        // @mblum TODO: implement custom adapter to support StudentsList & use layout student_list_item
+        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
         ListView studentList = (ListView) findViewById(R.id.student_list);
         studentList.setAdapter(adapter);
+
+        studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
+                startActivity(k);
+                String currentStudent = String.valueOf(parent.getItemAtPosition(position));
+                Toast.makeText(getApplication(), "Clicked Item: " + currentStudent, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 
