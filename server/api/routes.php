@@ -203,4 +203,35 @@ $app->get('/api/students', function ($request, $response, $args) {
   return sendRestResponse($response, $students);
 });
 
+
+/**
+ * GET /api/students
+ *
+ * Get all students
+ *
+ */
+$app->get('/api/student/{id}', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, "
+    . "geschlecht, geburtsdatum, performance60mRun, performance1000mRun, "
+    . "performanceShotPut, performanceLongThrow, performanceLongJump, "
+    . "sumPoints FROM students WHERE id=?");
+
+  $stmt->bind_param("i", $args['id']);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  } 
+  
+  $result = $stmt->get_result();
+
+  if ($result->num_rows <= 0) {
+    return sendErrorReponse($response, "Student not found.", 404);
+  }
+
+  $student = $result->fetch_assoc();
+  return sendRestResponse($response, $student);
+});
+
 ?>
