@@ -25,6 +25,10 @@ public class Student {
     public Student() {
     }
 
+    public Student(int id) {
+        this.id = id;
+    }
+
     public Student(int id, String kennzahl, String klasse, String nachname, String vorname, String geschlecht, Date geburtsdatum) {
         this.id = id;
         this.kennzahl = kennzahl;
