@@ -8,6 +8,8 @@ import android.widget.Button;
 
 public class RankingActivity extends AppCompatActivity {
 
+    private static final String TAG = RankingActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

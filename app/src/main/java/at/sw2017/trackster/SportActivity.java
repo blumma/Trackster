@@ -8,6 +8,8 @@ import android.widget.Button;
 
 public class SportActivity extends AppCompatActivity {
 
+    private static final String TAG = SportActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
