@@ -52,11 +52,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     User user = response.body();
                     Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
-                    // @mblum TODO: got to main menu
+
                     Intent k = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(k);
-
-                    // @mblum TODO: session management
                 } else {
                     Toast.makeText(getApplication(), "Login failed!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, response.errorBody().toString());

@@ -175,15 +175,18 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
 
 
 /**
- * GET /api/schueler
+ * GET /api/students
  *
- * Get all Schueler
+ * Get all students
  *
  */
-$app->get('/api/schuelerFromDb', function ($request, $response, $args) {
+$app->get('/api/students', function ($request, $response, $args) {
 
   $dbh = DbHandler::getDbh();
-  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, geschlecht, geburtsdatum, 60m_run, 1000m_run, shot_put, long_throw, long_jump, sum_points FROM schueler");
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, "
+    . "geschlecht, geburtsdatum, performance60mRun, performance1000mRun, "
+    . "performanceShotPut, performanceLongThrow, performanceLongJump, "
+    . "sumPoints FROM students");
   
   if (!$stmt->execute()) {
     return sendErrorReponse($response, $stmt->error);
@@ -191,13 +194,85 @@ $app->get('/api/schuelerFromDb', function ($request, $response, $args) {
   
   $result = $stmt->get_result();
   
-  $schueler = array();
+  $students = array();
 
   while($row = $result->fetch_assoc()) {
-    array_push($schueler, $row);
+    array_push($students, $row);
   }
 
-  return sendRestResponse($response, $schueler);
+  return sendRestResponse($response, $students);
+});
+
+
+/**
+ * GET /api/student/{id}
+ *
+ * Get specific student by id
+ *
+ */
+$app->get('/api/student/{id}', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, "
+    . "geschlecht, geburtsdatum, performance60mRun, performance1000mRun, "
+    . "performanceShotPut, performanceLongThrow, performanceLongJump, "
+    . "sumPoints FROM students WHERE id=?");
+
+  $stmt->bind_param("i", $args['id']);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  } 
+  
+  $result = $stmt->get_result();
+
+  if ($result->num_rows <= 0) {
+    return sendErrorReponse($response, "Student not found.", 404);
+  }
+
+  $student = $result->fetch_assoc();
+  return sendRestResponse($response, $student);
+});
+
+
+/**
+ * POST /api/student/{id}
+ *
+ * Save changed of specific student to DB.
+ *
+ */
+$app->post('/api/student/{id}', function ($request, $response, $args) {
+
+  $student = $request->getParsedBody();
+
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("UPDATE students SET klasse = ?, nachname = ?, "
+    . "vorname = ?, geschlecht = ?, geburtsdatum = ?, performance60mRun = ?, "
+    . "performance1000mRun = ?, performanceShotPut = ?, "
+    . "performanceLongThrow = ?, performanceLongJump = ?, sumPoints = ? "
+    . "WHERE id = ?");
+  
+  $stmt->bind_param("sssssddddddi", 
+      $student['klasse'], 
+      $student['nachname'], 
+      $student['vorname'],
+      $student['geschlecht'],
+      $student['geburtsdatum'],
+      $student['performance60mRun'],
+      $student['performance1000mRun'],
+      $student['performanceShotPut'],
+      $student['performanceLongThrow'],
+      $student['performanceLongJump'],
+      $student['sumPoints'],
+      $args['id']
+    );
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  return sendRestResponse($response);
 });
 
 ?>

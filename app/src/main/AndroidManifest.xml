@@ -11,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".StudentListActivity"></activity>
+        <activity android:name=".StopWatchActivity"></activity>
+        <activity android:name=".MenuActivity2"></activity>
+        <activity android:name=".SportActivity"></activity>
+        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity"></activity>
+
+        <activity android:name=".StudentActivity"></activity>
+        <activity android:name=".TrackPerformanceActivity" />
     </application>
 
 </manifest>
