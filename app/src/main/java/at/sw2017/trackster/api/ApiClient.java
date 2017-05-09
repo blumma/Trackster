@@ -10,7 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static String BASE_URL = "http://192.168.0.18/";
+    // IMPORTANT: Retrofit need '/' at the end of the url!
+    public static String BASE_URL = "http://trackster.mablum.at/public/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

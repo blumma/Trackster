@@ -143,7 +143,7 @@ $app->get('/api/users', function ($request, $response, $args) {
   );
 
   return sendRestResponse($response, $users);
-});
+})->add($isLoggedIn);
 
 
 /**
@@ -171,7 +171,7 @@ $app->get('/api/usersFromDb', function ($request, $response, $args) {
   }
 
   return sendRestResponse($response, $users);
-});
+})->add($isLoggedIn);
 
 
 /**
@@ -201,7 +201,7 @@ $app->get('/api/students', function ($request, $response, $args) {
   }
 
   return sendRestResponse($response, $students);
-});
+})->add($isLoggedIn);
 
 
 /**
@@ -232,7 +232,7 @@ $app->get('/api/student/{id}', function ($request, $response, $args) {
 
   $student = $result->fetch_assoc();
   return sendRestResponse($response, $student);
-});
+})->add($isLoggedIn);
 
 
 /**
@@ -273,6 +273,6 @@ $app->post('/api/student/{id}', function ($request, $response, $args) {
   }
 
   return sendRestResponse($response);
-});
+})->add($isLoggedIn);
 
 ?>

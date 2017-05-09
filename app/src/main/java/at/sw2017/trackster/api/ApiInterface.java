@@ -17,24 +17,24 @@ import retrofit2.http.Path;
 
 public interface ApiInterface {
 
-    @GET("/api/users")
+    @GET("api/users")
     Call<List<User>> getUsers();
 
-    @GET("/api/usersFromDb")
+    @GET("api/usersFromDb")
     Call<List<User>> getUsersFromDb();
 
-    @POST("/api/login")
+    @POST("api/login")
     Call<User> login(@Body User user);
 
-    @POST("/api/logout")
+    @POST("api/logout")
     Call<ResponseBody> logout();
 
-    @GET("/api/students")
+    @GET("api/students")
     Call<List<Student>> getStudents();
 
-    @GET("/api/student/{studentId}")
+    @GET("api/student/{studentId}")
     Call<Student> getStudentById(@Path("studentId") int studentId);
 
-    @POST("/api/student/{studentId}")
+    @POST("api/student/{studentId}")
     Call<ResponseBody> updateStudentById(@Path("studentId") int studentId, @Body Student student);
 }
