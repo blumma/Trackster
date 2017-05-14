@@ -16,10 +16,10 @@ public class SessionCookieRequestInterceptor implements Interceptor  {
     public Response intercept(Interceptor.Chain chain) throws IOException {
 
         Request.Builder builder = chain.request().newBuilder();
-
-        // @mblum TODO: getCookie from storage...
-        String sessionCookie = "";
-        builder.addHeader("Cookie", sessionCookie);
+        String sessionCookie = SessionCookieStore.getStore().getSessionCookie();
+        if (sessionCookie != null) {
+            builder.addHeader("Cookie", sessionCookie);
+        }
 
         return chain.proceed(builder.build());
     }

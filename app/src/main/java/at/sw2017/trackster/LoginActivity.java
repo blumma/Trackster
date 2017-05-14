@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
+import at.sw2017.trackster.api.SessionCookieStore;
 import at.sw2017.trackster.models.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,16 +43,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(User loginCredentials) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
+        SessionCookieStore.getStore().clear();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<User> call = apiService.login(loginCredentials);
         call.enqueue(new Callback<User>() {
 
             @Override
             public void onResponse(Call<User>call, Response<User> response) {
                 if(response.isSuccessful()) {
+                    String cookies = response.headers().get("Set-Cookie");
+                    SessionCookieStore.getStore().parseSessionCookie(cookies);
 
-                    // @mblum TODO: parse session cookie and save in storage
                     User user = response.body();
                     Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
 

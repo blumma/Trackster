@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
+import at.sw2017.trackster.api.SessionCookieStore;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +49,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody>call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
                     Toast.makeText(getApplication(), "Successful logout!", Toast.LENGTH_SHORT).show();
-
+                    SessionCookieStore.getStore().clear();
                     Intent k = new Intent(MenuActivity.this, LoginActivity.class);
                     startActivity(k);
                 }
