@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User>call, Response<User> response) {
                 if(response.isSuccessful()) {
+
+                    // @mblum TODO: parse session cookie and save in storage
                     User user = response.body();
                     Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
 
