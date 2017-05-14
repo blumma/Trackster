@@ -68,7 +68,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                     populateStudentView(student);
                 }
                 else {
-                    Toast.makeText(getApplication(), "Error while loading student data! (dd-MM-yyyy)", Toast.LENGTH_SHORT).show();
+                    switch (response.code()) {
+                        case 401:
+                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Intent k = new Intent(TrackPerformanceActivity.this, LoginActivity.class);
+                            startActivity(k);
+                            break;
+                        case 500:
+                        default:
+                            Toast.makeText(getApplication(), "Error while loading student data!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -156,7 +165,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                     Toast.makeText(getApplication(), "Successfully saved student performance!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplication(), "Error while loading student data!", Toast.LENGTH_SHORT).show();
+                    switch (response.code()) {
+                        case 401:
+                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Intent k = new Intent(TrackPerformanceActivity.this, LoginActivity.class);
+                            startActivity(k);
+                            break;
+                        case 500:
+                        default:
+                            Toast.makeText(getApplication(), "Error while loading student data!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
