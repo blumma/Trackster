@@ -262,6 +262,37 @@ $app->get('/api/student/{id}', function ($request, $response, $args) {
   return sendRestResponse($response, $student);
 })->add($isLoggedIn);
 
+/**
+ * GET /api/students/{class}
+ *
+ * Get specific students by class
+ *
+ */
+$app->get('/api/students/{class}', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $stmt = $dbh->prepare("SELECT id, kennzahl, klasse, nachname, vorname, "
+    . "geschlecht, geburtsdatum, performance60mRun, performance1000mRun, "
+    . "performanceShotPut, performanceLongThrow, performanceLongJump, "
+    . "sumPoints FROM students WHERE klasse=?");
+
+  $stmt->bind_param("s", $args['class']);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  } 
+  
+  $result = $stmt->get_result();
+  
+  $students = array();
+
+  while($row = $result->fetch_assoc()) {
+    array_push($students, $row);
+  }
+
+  return sendRestResponse($response, $students);
+})->add($isLoggedIn);
+
 
 /**
  * POST /api/student/{id}

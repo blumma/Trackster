@@ -38,6 +38,9 @@ public interface ApiInterface {
     @GET("api/student/{studentId}")
     Call<Student> getStudentById(@Path("studentId") int studentId);
 
+    @GET("api/students/{class}")
+    Call<List<Student>> getStudentsByClass(@Path("class") String clas);
+
     @POST("api/student/{studentId}")
     Call<ResponseBody> updateStudentById(@Path("studentId") int studentId, @Body Student student);
 }

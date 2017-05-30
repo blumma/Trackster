@@ -36,7 +36,7 @@ public class StudentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
         getClasses();
-        getStudentList();
+
     }
 
     private void getClasses() {
@@ -75,10 +75,10 @@ public class StudentListActivity extends AppCompatActivity {
 
     }
 
-    private void getStudentList() {
+    private void getStudentList(String clas) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<Student>> call = apiService.getStudents();
+        Call<List<Student>> call = apiService.getStudentsByClass(clas);
         call.enqueue(new Callback<List<Student>>() {
 
             @Override
@@ -111,8 +111,9 @@ public class StudentListActivity extends AppCompatActivity {
 
     private void populateClassList(List<Student> students) {
 
-        String[] strClasses = new String[students.size()];
-        int i = 0;
+        String[] strClasses = new String[students.size() + 1];
+        strClasses[0] = "";
+        int i = 1;
 
         for (Student s: students) {
             strClasses[i++] = (s.getKlasse());
@@ -120,10 +121,36 @@ public class StudentListActivity extends AppCompatActivity {
 
 
 
-        Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
+        final Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
         String[] items = strClasses;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String clas = dropdown.getSelectedItem().toString();
+                if(clas != "")
+                {
+                    getStudentList(clas);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+           /* @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+
+
+            }*/
+        });
+
+
 
     }
 
