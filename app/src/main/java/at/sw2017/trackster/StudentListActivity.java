@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,8 +35,44 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
-
+        getClasses();
         getStudentList();
+    }
+
+    private void getClasses() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<List<Student>> call = apiService.getClasses();
+        call.enqueue(new Callback<List<Student>>() {
+
+            @Override
+            public void onResponse(Call<List<Student>>call, Response<List<Student>> response) {
+                if(response.isSuccessful()) {
+
+                    List<Student> students = response.body();
+                    populateClassList(students);
+                }
+                else {
+                    switch (response.code()) {
+                        case 401:
+                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Intent k = new Intent(StudentListActivity.this, LoginActivity.class);
+                            startActivity(k);
+                            break;
+                        case 500:
+                        default:
+                            Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Student>>call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+
+
     }
 
     private void getStudentList() {
@@ -70,6 +107,24 @@ public class StudentListActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    private void populateClassList(List<Student> students) {
+
+        String[] strClasses = new String[students.size()];
+        int i = 0;
+
+        for (Student s: students) {
+            strClasses[i++] = (s.getKlasse());
+        }
+
+
+
+        Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
+        String[] items = strClasses;
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
     }
 
     private void populateStudentList(List<Student> students) {

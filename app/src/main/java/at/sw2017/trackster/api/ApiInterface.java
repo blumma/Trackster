@@ -32,6 +32,9 @@ public interface ApiInterface {
     @GET("api/students")
     Call<List<Student>> getStudents();
 
+    @GET("api/studentsClasses")
+    Call<List<Student>> getClasses();
+
     @GET("api/student/{studentId}")
     Call<Student> getStudentById(@Path("studentId") int studentId);
 

@@ -203,6 +203,34 @@ $app->get('/api/students', function ($request, $response, $args) {
   return sendRestResponse($response, $students);
 })->add($isLoggedIn);
 
+/**
+ * GET /api/studentsClasses
+ *
+ * Get all classes
+ *
+ */
+$app->get('/api/studentsClasses', function ($request, $response, $args) {
+
+  $dbh = DbHandler::getDbh();
+  $stmt = $dbh->prepare("SELECT klasse "
+    . "FROM students "
+	. "WHERE 1 GROUP By klasse");
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  } 
+  
+  $result = $stmt->get_result();
+  
+  $students = array();
+
+  while($row = $result->fetch_assoc()) {
+    array_push($students, $row);
+  }
+
+  return sendRestResponse($response, $students);
+})->add($isLoggedIn);
+
 
 /**
  * GET /api/student/{id}
