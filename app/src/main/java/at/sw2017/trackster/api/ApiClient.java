@@ -13,6 +13,7 @@ public class ApiClient {
 
     // IMPORTANT: Retrofit need '/' at the end of the url!
     public static String BASE_URL = "http://trackster.mablum.at/public/";
+   // public static String BASE_URL = "http://192.168.42.168/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
