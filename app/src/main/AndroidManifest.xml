@@ -11,12 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".StudentListActivity"></activity>
-        <activity android:name=".StopWatchActivity"></activity>
-        <activity android:name=".MenuActivity2"></activity>
-        <activity android:name=".SportActivity"></activity>
-        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".StudentListActivity" />
+        <activity android:name=".StopWatchActivity" />
+        <activity android:name=".MenuActivity2" />
+        <activity android:name=".SportActivity" />
+        <activity android:name=".RankingActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -25,9 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".StudentActivity"></activity>
+        <activity android:name=".StudentActivity" />
         <activity android:name=".TrackPerformanceActivity" />
+        <activity android:name="ViewPageActivity" />
     </application>
 
 </manifest>
