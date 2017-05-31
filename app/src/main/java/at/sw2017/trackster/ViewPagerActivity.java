@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by Patrick on 26.05.2017.
  */
 
-public class ViewPageActivity extends Activity {
+public class ViewPagerActivity extends Activity {
 
     private Context mContext;
     private ViewPager mViewPager;
@@ -40,23 +40,27 @@ public class ViewPageActivity extends Activity {
         ListView listview2 = new ListView(mContext);
         ListView listview3 = new ListView(mContext);
         ListView listview4 = new ListView(mContext);
+        ListView listview5 = new ListView(mContext);
 
         Vector<View> pages = new Vector<View>();
 
+        pages.add(listview5);
         pages.add(listview1);
         pages.add(listview2);
         pages.add(listview3);
         pages.add(listview4);
+
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         CustomPagerAdapter adapter = new CustomPagerAdapter(mContext,pages);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(2);
 
-        getStudentList(listview1, listview2, listview3, listview4);
+        getStudentList(listview1, listview2, listview3, listview4, listview5);
     }
 
-    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4) {
+    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3,
+                                final ListView listview4, final ListView listview5) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<List<Student>> call = apiService.getStudents();
@@ -68,14 +72,14 @@ public class ViewPageActivity extends Activity {
                 if(response.isSuccessful()) {
 
                     List<Student> students = response.body();
-                    populateStudents(students, listview1, listview2, listview3, listview4);
+                    populateStudents(students, listview1, listview2, listview3, listview4, listview5);
 
                 }
                 else {
                     switch (response.code()) {
                         case 401:
                             Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
-                            Intent k = new Intent(ViewPageActivity.this, LoginActivity.class);
+                            Intent k = new Intent(ViewPagerActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
                         case 500:
@@ -92,13 +96,15 @@ public class ViewPageActivity extends Activity {
 
     }
 
-    public void populateStudents(final List<Student> students,final  ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4)
+    public void populateStudents(final List<Student> students,final  ListView listview1, final ListView listview2,
+                                 final ListView listview3, final ListView listview4, final ListView listview5)
     {
         View header = (View)getLayoutInflater().inflate(R.layout.list_view_header, null);
         listview1.addHeaderView(header);
         listview2.addHeaderView(header);
         listview3.addHeaderView(header);
         listview4.addHeaderView(header);
+        listview5.addHeaderView(header);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -134,6 +140,11 @@ public class ViewPageActivity extends Activity {
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview4.setAdapter(cust_adapter);
                         textView.setText("Schlagball");
+                        break;
+                    case 4:
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview5.setAdapter(cust_adapter);
+                        textView.setText("Gesamtpunkte");
                         break;
                     default:
                         break;

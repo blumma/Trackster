@@ -110,6 +110,20 @@ public class RankingAdapter extends BaseAdapter {
                 myTreeMultimap = reverseMap;
                 break;
 
+            case 4:
+
+                for (Student s : students) {
+
+                   // double score = CalculateScore.calculateOverallScore(s.getPerformance60mRun(), s.getPerformanceLongJump(), s.getPerformanceLongThrow(),
+                     //       s.getPerformanceShotPut(), s.getGeschlecht());
+
+                    reverseMap.put(score, s.getVorname() + " " + s.getNachname());
+
+
+                }
+                myTreeMultimap = reverseMap;
+                break;
+
             default:
 
                 break;
