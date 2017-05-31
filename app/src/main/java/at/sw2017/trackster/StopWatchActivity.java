@@ -4,6 +4,7 @@ package at.sw2017.trackster;
  * Created by Patrick on 26.04.2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
+import at.sw2017.trackster.models.Student;
+
 public class StopWatchActivity extends AppCompatActivity {
 
     TextView textView ;
 
-    Button start, pause, reset, lap ;
+    Button start, pause, reset, lap;
 
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
 
@@ -110,6 +113,9 @@ public class StopWatchActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 ListElementsArrayList.add(textView.getText().toString());
+
+                System.out.println(textView.getText().toString());
+               // System.out.println(student.getPerformance60mRun());
 
                 adapter.notifyDataSetChanged();
 

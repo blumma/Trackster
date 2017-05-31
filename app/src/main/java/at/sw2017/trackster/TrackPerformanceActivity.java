@@ -52,6 +52,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
 
             }
         });
+
+        Button stopwatch = (Button) findViewById(R.id.stopwatch);
+        stopwatch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), StopWatchActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+
     }
 
     private void loadStudentById(int studentId) {
