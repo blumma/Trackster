@@ -15,7 +15,6 @@
         <activity android:name=".StopWatchActivity" />
         <activity android:name=".MenuActivity2" />
         <activity android:name=".SportActivity" />
-        <activity android:name=".RankingActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
