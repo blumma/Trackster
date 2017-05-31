@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundLight"
     tools:context="at.sw2017.trackster.LoginActivity">
 
     <TextView
@@ -71,7 +72,7 @@
         android:layout_height="50dp"
         android:text="Login"
         android:background="@color/colorAccent"
-        android:textColor="#fff"
+        android:textColor="@color/colorAccentText"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
