@@ -8,6 +8,8 @@
 
 
     <Button
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:id="@+id/button_throw"
         android:layout_width="270dp"
         android:layout_height="48dp"
@@ -25,6 +27,8 @@
     <Button
         android:id="@+id/button_60m"
         android:layout_width="270dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:layout_height="48dp"
         android:text="60m"
         android:layout_marginRight="8dp"
@@ -45,6 +49,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="103dp"
         android:text="1000m"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -60,6 +66,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="33dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:text="Weitsprung"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
