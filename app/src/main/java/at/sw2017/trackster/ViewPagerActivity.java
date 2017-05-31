@@ -44,12 +44,11 @@ public class ViewPagerActivity extends Activity {
 
         Vector<View> pages = new Vector<View>();
 
-        pages.add(listview5);
         pages.add(listview1);
         pages.add(listview2);
         pages.add(listview3);
         pages.add(listview4);
-
+        pages.add(listview5);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         CustomPagerAdapter adapter = new CustomPagerAdapter(mContext,pages);
@@ -122,30 +121,32 @@ public class ViewPagerActivity extends Activity {
                     case 0:
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview1.setAdapter(cust_adapter);
-                        textView.setText("60Meter");
+                        textView.setText("Gesamtpunkte");
                         break;
 
                     case 1:
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview2.setAdapter(cust_adapter);
-                        textView.setText("1000 Meter");
+                        textView.setText("60Meter");
                         break;
 
                     case 2:
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview3.setAdapter(cust_adapter);
-                        textView.setText("Weitsprung");
+                        textView.setText("1000 Meter");
                         break;
+
                     case 3:
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview4.setAdapter(cust_adapter);
-                        textView.setText("Schlagball");
+                        textView.setText("Weitsprung");
                         break;
                     case 4:
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview5.setAdapter(cust_adapter);
-                        textView.setText("Gesamtpunkte");
+                        textView.setText("Schlagball");
                         break;
+
                     default:
                         break;
                 }

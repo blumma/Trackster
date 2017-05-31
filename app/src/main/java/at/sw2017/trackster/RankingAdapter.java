@@ -17,6 +17,7 @@ import com.google.common.collect.TreeMultimap;
 import java.util.Collections;
 import java.util.List;
 
+import at.sw2017.trackster.models.CalculateScore;
 import at.sw2017.trackster.models.Student;
 
 public class RankingAdapter extends BaseAdapter {
@@ -82,19 +83,32 @@ public class RankingAdapter extends BaseAdapter {
         switch (page_nr)
         {
             case 0:
+
+                for (Student s : students) {
+
+                    CalculateScore score = new CalculateScore(s.getPerformance60mRun(), s.getPerformanceLongJump(), s.getPerformanceLongThrow(),
+                            s.getPerformanceShotPut(), s.getGeschlecht());
+
+                    double sum = score.calculateOverallScore();
+                    reverseMap.put(sum, s.getVorname() + " " + s.getNachname());
+                }
+                myTreeMultimap = reverseMap;
+                break;
+
+            case 1:
                 for (Student s : students) {
                     myTreeMultimap.put(s.getPerformance60mRun(), s.getVorname() + " " + s.getNachname());
                 }
                 System.out.println(myTreeMultimap);
                 break;
 
-            case 1:
+            case 2:
                 for (Student s : students) {
                     myTreeMultimap.put(s.getPerformance1000mRun(), s.getVorname() + " " + s.getNachname());
                 }
 
                 break;
-            case 2:
+            case 3:
 
                 for (Student s : students) {
                     reverseMap.put(s.getPerformanceLongJump(), s.getVorname() + " " + s.getNachname());
@@ -102,24 +116,10 @@ public class RankingAdapter extends BaseAdapter {
                 myTreeMultimap = reverseMap;
                 break;
 
-            case 3:
-
-                for (Student s : students) {
-                    reverseMap.put(s.getPerformanceLongThrow(), s.getVorname() + " " + s.getNachname());
-                }
-                myTreeMultimap = reverseMap;
-                break;
-
             case 4:
 
                 for (Student s : students) {
-
-                   // double score = CalculateScore.calculateOverallScore(s.getPerformance60mRun(), s.getPerformanceLongJump(), s.getPerformanceLongThrow(),
-                     //       s.getPerformanceShotPut(), s.getGeschlecht());
-
-                    reverseMap.put(score, s.getVorname() + " " + s.getNachname());
-
-
+                    reverseMap.put(s.getPerformanceLongThrow(), s.getVorname() + " " + s.getNachname());
                 }
                 myTreeMultimap = reverseMap;
                 break;
