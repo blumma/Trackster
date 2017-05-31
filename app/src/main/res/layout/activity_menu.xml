@@ -56,6 +56,8 @@
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:text="Logout"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
