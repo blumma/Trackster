@@ -147,4 +147,15 @@
         android:layout_marginBottom="5dp"
         tools:layout_editor_absoluteX="8dp" />
 
+    <Button
+        android:id="@+id/stopwatch"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="183dp"
+        android:layout_marginRight="8dp"
+        android:text="Stoppuhr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="267dp" />
+
 </android.support.constraint.ConstraintLayout>

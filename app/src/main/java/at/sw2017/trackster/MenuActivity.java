@@ -76,7 +76,7 @@ public class MenuActivity extends AppCompatActivity {
         final Button buttonRanking = (Button) findViewById(R.id.button_1000m);
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), RankingActivity.class);
+                Intent myIntent = new Intent(v.getContext(), ViewPageActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
