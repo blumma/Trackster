@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECEFF1">
+    android:background="@color/colorBackgroundLight">
 
     <TextView
         android:text="00:00:00"
@@ -13,12 +13,14 @@
         android:id="@+id/textView"
         android:textSize="50dp"
         android:textStyle="bold"
-        android:textColor="#009688"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Start"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
@@ -29,6 +31,8 @@
 
     <Button
         android:text="Pause"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
@@ -38,6 +42,8 @@
 
     <Button
         android:text="Reset"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDarkText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button2"
@@ -49,6 +55,8 @@
         android:text="Save Lap"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorAccentText"
         android:layout_marginTop="24dp"
         android:id="@+id/button4"
         android:layout_below="@+id/button"
