@@ -90,7 +90,7 @@ public class RankingAdapter extends BaseAdapter {
                             s.getPerformanceShotPut(), s.getGeschlecht());
 
                     double sum = score.calculateOverallScore();
-                    reverseMap.put(sum, s.getVorname() + " " + s.getNachname());
+                    reverseMap.put(score.round(sum, 2), s.getVorname() + " " + s.getNachname());
                 }
                 myTreeMultimap = reverseMap;
                 break;
