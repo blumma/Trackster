@@ -1,5 +1,6 @@
 package at.sw2017.trackster;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -60,8 +61,19 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                
+            }
+        }
     }
 
     private void loadStudentById(int studentId) {

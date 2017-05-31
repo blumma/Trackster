@@ -23,21 +23,14 @@ import at.sw2017.trackster.models.Student;
 public class StopWatchActivity extends AppCompatActivity {
 
     TextView textView ;
-
-    Button start, pause, reset, lap;
-
+    Button start, stop, reset, save;
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
-
     Handler handler;
-
     int Seconds, Minutes, MilliSeconds ;
-
     ListView listView ;
-
     String[] ListElements = new String[] {  };
-
     List<String> ListElementsArrayList ;
-
+    boolean running = false;
     ArrayAdapter<String> adapter ;
 
     @Override
@@ -47,9 +40,9 @@ public class StopWatchActivity extends AppCompatActivity {
 
         textView = (TextView)findViewById(R.id.textView);
         start = (Button)findViewById(R.id.button);
-        pause = (Button)findViewById(R.id.button2);
+        stop = (Button)findViewById(R.id.button2);
         reset = (Button)findViewById(R.id.button3);
-        lap = (Button)findViewById(R.id.button4) ;
+        save = (Button)findViewById(R.id.button4) ;
         listView = (ListView)findViewById(R.id.listview1);
 
         handler = new Handler() ;
@@ -70,20 +63,29 @@ public class StopWatchActivity extends AppCompatActivity {
                 StartTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
 
+                if(running){
+                    ListElementsArrayList.add(textView.getText().toString());
+                    System.out.println(textView.getText().toString());
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    start.setText("Start/Lap");
+                    running = true;
+                }
+
                 reset.setEnabled(false);
 
             }
         });
 
-        pause.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 TimeBuff += MillisecondTime;
-
                 handler.removeCallbacks(runnable);
-
                 reset.setEnabled(true);
+                start.setText("Start");
 
             }
         });
@@ -101,14 +103,12 @@ public class StopWatchActivity extends AppCompatActivity {
                 MilliSeconds = 0 ;
 
                 textView.setText("00:00:00");
-
                 ListElementsArrayList.clear();
-
                 adapter.notifyDataSetChanged();
             }
         });
 
-        lap.setOnClickListener(new View.OnClickListener() {
+        /*lap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -120,7 +120,7 @@ public class StopWatchActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
             }
-        });
+        });*/
 
     }
 
