@@ -39,23 +39,24 @@ public class ViewPageActivity extends Activity {
         ListView listview1 = new ListView(mContext);
         ListView listview2 = new ListView(mContext);
         ListView listview3 = new ListView(mContext);
+        ListView listview4 = new ListView(mContext);
 
         Vector<View> pages = new Vector<View>();
 
         pages.add(listview1);
         pages.add(listview2);
-
         pages.add(listview3);
+        pages.add(listview4);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         CustomPagerAdapter adapter = new CustomPagerAdapter(mContext,pages);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(2);
 
-        getStudentList(listview1, listview2, listview3);
+        getStudentList(listview1, listview2, listview3, listview4);
     }
 
-    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3) {
+    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<List<Student>> call = apiService.getStudents();
@@ -67,7 +68,7 @@ public class ViewPageActivity extends Activity {
                 if(response.isSuccessful()) {
 
                     List<Student> students = response.body();
-                    populateStudents(students, listview1, listview2, listview3);
+                    populateStudents(students, listview1, listview2, listview3, listview4);
 
                 }
                 else {
@@ -91,12 +92,13 @@ public class ViewPageActivity extends Activity {
 
     }
 
-    public void populateStudents(final List<Student> students,final  ListView listview1, final ListView listview2, final ListView listview3)
+    public void populateStudents(final List<Student> students,final  ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4)
     {
         View header = (View)getLayoutInflater().inflate(R.layout.list_view_header, null);
         listview1.addHeaderView(header);
         listview2.addHeaderView(header);
         listview3.addHeaderView(header);
+        listview4.addHeaderView(header);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -127,6 +129,11 @@ public class ViewPageActivity extends Activity {
                         cust_adapter = new RankingAdapter(mContext, students, position);
                         listview3.setAdapter(cust_adapter);
                         textView.setText("Weitsprung");
+                        break;
+                    case 3:
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview4.setAdapter(cust_adapter);
+                        textView.setText("Schlagball");
                         break;
                     default:
                         break;

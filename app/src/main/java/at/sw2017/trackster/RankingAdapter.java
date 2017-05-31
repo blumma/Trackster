@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 
+import java.util.Collections;
 import java.util.List;
 
 import at.sw2017.trackster.models.Student;
@@ -74,6 +77,7 @@ public class RankingAdapter extends BaseAdapter {
     }
 
         SortedSetMultimap<Double,String> myTreeMultimap = TreeMultimap.create();
+        SortedSetMultimap<Double,String> reverseMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
 
         switch (page_nr)
         {
@@ -91,13 +95,23 @@ public class RankingAdapter extends BaseAdapter {
 
                 break;
             case 2:
-                for (Student s : students) {
-                    myTreeMultimap.put(s.getPerformanceLongJump(), s.getVorname() + " " + s.getNachname());
-                }
 
+                for (Student s : students) {
+                    reverseMap.put(s.getPerformanceLongJump(), s.getVorname() + " " + s.getNachname());
+                }
+                myTreeMultimap = reverseMap;
+                break;
+
+            case 3:
+
+                for (Student s : students) {
+                    reverseMap.put(s.getPerformanceLongThrow(), s.getVorname() + " " + s.getNachname());
+                }
+                myTreeMultimap = reverseMap;
                 break;
 
             default:
+
                 break;
         }
 
