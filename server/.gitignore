@@ -1,0 +1,10 @@
+/vendor/
+/logs/*
+!/logs/README.md
+*.log
+.DS_Store
+/api/config/config.php
+/api/config/server.php
+/uploads/*
+composer.phar
+
