@@ -87,7 +87,7 @@ public class RankingAdapter extends BaseAdapter {
                 for (Student s : students) {
 
                     CalculateScore score = new CalculateScore(s.getPerformance60mRun(), s.getPerformanceLongJump(), s.getPerformanceLongThrow(),
-                            s.getPerformanceShotPut(), s.getGeschlecht());
+                            s.getPerformanceShotPut(), s.getGeschlecht(),s.getGeburtsdatum());
 
                     double sum = score.calculateOverallScore();
                     reverseMap.put(score.round(sum, 2), s.getVorname() + " " + s.getNachname());
