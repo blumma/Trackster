@@ -67,7 +67,7 @@ public class CalculateScore {
             }
         }
 
-        return points_60m + points_jump + points_kugelstossen + points_schlagball;
+        return points_60m + points_jump + points_schlagball;
     }
 
 
