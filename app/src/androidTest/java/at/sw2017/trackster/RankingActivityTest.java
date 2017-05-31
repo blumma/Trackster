@@ -12,8 +12,11 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
 
@@ -33,8 +36,8 @@ public class RankingActivityTest {
     }
 
     @Rule
-    public ActivityTestRule<ViewPageActivity> menuActivityTestRule =
-            new ActivityTestRule<>(ViewPageActivity.class, true, true);
+    public ActivityTestRule<ViewPagerActivity> menuActivityTestRule =
+            new ActivityTestRule<>(ViewPagerActivity.class, true, true);
 
     @Test
     public void testMenuButton()
@@ -46,6 +49,20 @@ public class RankingActivityTest {
 
         onView(withId(R.id.viewpager)).perform(swipeLeft());
         onView(withId(R.id.viewpager)).perform(swipeLeft());
+
+    }
+
+    public void testSwipe()
+    {
+        onView(allOf(withId(R.id.tv), withText("60Meter"))).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).perform(swipeRight());
+        onView(withText("1000 Meter")).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).perform(swipeRight());
+        onView(withText("Weitsprung")).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).perform(swipeRight());
+        onView(withText("Schlagball")).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        onView(withText("Weitsprung")).check(matches(isDisplayed()));
 
     }
 
