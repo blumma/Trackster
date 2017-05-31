@@ -294,6 +294,7 @@ $app->get('/api/students/{class}', function ($request, $response, $args) {
 })->add($isLoggedIn);
 
 
+
 /**
  * POST /api/student/{id}
  *

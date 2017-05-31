@@ -154,28 +154,27 @@ public class StudentListActivity extends AppCompatActivity {
 
     }
 
-    private void populateStudentList(List<Student> students) {
+    private void populateStudentList(final List<Student> students) {
 
-        String[] strStudents = new String[students.size()];
-        int i = 0;
-
-        for (Student s: students) {
-            strStudents[i++] = (s.getVorname() + " " + s.getNachname());
-        }
         // @mblum TODO: implement custom adapter to support StudentsList & use layout student_list_item
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
-        ListView studentList = (ListView) findViewById(R.id.student_list);
+        //ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
+        final ListView studentList = (ListView) findViewById(R.id.student_list);
+        CustomAdapter adapter =  new CustomAdapter(students,getApplicationContext());
         studentList.setAdapter(adapter);
 
         studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Student student = students.get(position);
+
                 // @mblum TODO: retreive id from custom adapter -> this will not work proberly!
-                int selectedStudentId = (int)id + 1;
+                //int selectedStudentId = (int)id + 1;
+
+                
 
                 Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
-                k.putExtra("studentId", "" + selectedStudentId);
+                k.putExtra("studentId", "" + student.getId());
                 startActivity(k);
 
                 /*String currentStudent = String.valueOf(parent.getItemAtPosition(position));
