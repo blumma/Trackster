@@ -76,7 +76,7 @@ public class LoginActivityTest {
         onView(withId(R.id.login_button)).perform(click());
 
         RecordedRequest request = server.takeRequest();
-        assertEquals("/api/login", request.getPath());
+        assertEquals("/tracksterMockServer/api/login", request.getPath());
 
         onView(withText("Successful login!")).
                 inRoot(withDecorView(not(is(menuActivityTestRule.getActivity().getWindow().getDecorView())))).
@@ -114,7 +114,7 @@ public class LoginActivityTest {
         onView(withId(R.id.login_button)).perform(click());
 
         RecordedRequest request = server.takeRequest();
-        assertEquals("/api/login", request.getPath());
+        assertEquals("/tracksterMockServer/api/login", request.getPath());
 
         onView(withText("Login failed!")).
                 inRoot(withDecorView(not(is(menuActivityTestRule.getActivity().getWindow().getDecorView())))).

@@ -1,6 +1,7 @@
 package at.sw2017.trackster.api;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import at.sw2017.trackster.models.Student;
 import at.sw2017.trackster.models.User;
@@ -32,8 +33,14 @@ public interface ApiInterface {
     @GET("api/students")
     Call<List<Student>> getStudents();
 
+    @GET("api/studentsClasses")
+    Call<List<Student>> getClasses();
+
     @GET("api/student/{studentId}")
     Call<Student> getStudentById(@Path("studentId") int studentId);
+
+    @GET("api/students/{class}")
+    Call<List<Student>> getStudentsByClass(@Path("class") String clas);
 
     @POST("api/student/{studentId}")
     Call<ResponseBody> updateStudentById(@Path("studentId") int studentId, @Body Student student);

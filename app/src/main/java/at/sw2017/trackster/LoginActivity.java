@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User>call, Throwable t) {
                 Log.e(TAG, t.toString());
+                Toast.makeText(getApplication(), "Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }
