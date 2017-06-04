@@ -78,18 +78,18 @@ public class TrackPerformanceActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra(METERS_60);
-                if(result != null) {
-                    EditText txtVorname = (EditText) findViewById(R.id.txt_60m);
-                    txtVorname.setText(TimeConvert.millisecToTime(Double.parseDouble(result)));
-                }
-                result=data.getStringExtra(METERS_1000);
-                if(result != null) {
-                    EditText txtVorname = (EditText) findViewById(R.id.txt_1000m);
-                    txtVorname.setText(TimeConvert.millisecToTime(Double.parseDouble(result)));
-                }
+        if (resultCode == Activity.RESULT_OK) {
+            String result = data.getStringExtra(METERS_60);
+            if (result != null) {
+                EditText txtVorname = (EditText) findViewById(R.id.txt_60m);
+                txtVorname.setText(TimeConvert.millisecToTime(Double.parseDouble(result)));
             }
+            result = data.getStringExtra(METERS_1000);
+            if (result != null) {
+                EditText txtVorname = (EditText) findViewById(R.id.txt_1000m);
+                txtVorname.setText(TimeConvert.millisecToTime(Double.parseDouble(result)));
+            }
+        }
     }
 
     private void loadStudentById(int studentId) {
@@ -100,12 +100,11 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         call.enqueue(new Callback<Student>() {
 
             @Override
-            public void onResponse(Call<Student>call, Response<Student> response) {
-                if(response.isSuccessful()) {
+            public void onResponse(Call<Student> call, Response<Student> response) {
+                if (response.isSuccessful()) {
                     Student student = response.body();
                     populateStudentView(student);
-                }
-                else {
+                } else {
                     switch (response.code()) {
                         case 401:
                             Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
@@ -120,7 +119,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Student>call, Throwable t) {
+            public void onFailure(Call<Student> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
@@ -158,6 +157,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         Log.d(TAG, String.valueOf(student.getPerformanceLongJump()));
         txtLongjump.setText(String.valueOf(student.getPerformanceLongJump()));
+
+        EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
+        txtKugel.setText(String.valueOf(student.getPerformanceShotPut()));
+
+        EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
+        txtSchlag.setText(String.valueOf(student.getPerformanceLongThrow()));
+
+        EditText txtAll = (EditText) findViewById(R.id.txt_all);
+        txtAll.setText(String.valueOf(student.getOverallScore()));
+
     }
 
     private Student getStudentDataFromView(int studentId) throws ParseException {
@@ -188,6 +197,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         student.setPerformanceLongJump(Double.parseDouble(txtLongjump.getText().toString()));
 
+        EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
+        student.setPerformanceLongThrow(Double.parseDouble(txtSchlag.getText().toString()));
+
+        EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
+        student.setPerformanceShotPut(Double.parseDouble(txtKugel.getText().toString()));
+
+        // Recalculate
+        EditText txtAll = (EditText) findViewById(R.id.txt_all);
+        txtAll.setText(String.valueOf(student.getOverallScore()));
+
         return student;
     }
 
@@ -198,11 +217,10 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
 
             @Override
-            public void onResponse(Call<ResponseBody>call, Response<ResponseBody> response) {
-                if(response.isSuccessful()) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
                     Toast.makeText(getApplication(), "Successfully saved student performance!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     switch (response.code()) {
                         case 401:
                             Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
@@ -217,7 +235,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody>call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
