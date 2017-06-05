@@ -22,6 +22,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -64,11 +65,11 @@ public class MenuActivityTest {
         onView( withId(R.id.login_button)). perform ( click());
         onView( withId(R.id.button_1000m)). perform ( click());
 
-        //TODO check if ViewPager visible
+        onView(withId(R.id.viewpager)).check(matches(isCompletelyDisplayed()));
 
         Espresso.pressBack();
         onView( withId(R.id.button_input)). perform ( click());
-        onView(withText("Wähle Schüler")).check(matches(isDisplayed()));
+        onView(withId(R.id.textView_headline)).check(matches(isCompletelyDisplayed()));
 
     }
 

@@ -3,6 +3,7 @@ package at.sw2017.trackster;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -63,10 +64,15 @@ public class StudentListActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
-        onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
-        Espresso.closeSoftKeyboard();
-        onView( withId(R.id.login_button)). perform ( click());
+        try {
+            onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
+            onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
+            Espresso.closeSoftKeyboard();
+            onView(withId(R.id.login_button)).perform(click());
+        }
+        catch (NoMatchingViewException e){
+            //Already logged in
+        }
 
         onView( withId(R.id.button_input)). perform ( click());
         onView( withId(R.id.dpClass)).perform(click());
