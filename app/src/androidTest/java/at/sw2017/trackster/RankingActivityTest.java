@@ -2,6 +2,7 @@ package at.sw2017.trackster;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -13,10 +14,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
 
@@ -42,13 +48,25 @@ public class RankingActivityTest {
     @Test
     public void testMenuButton()
     {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
+        onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
+        Espresso.closeSoftKeyboard();
+        onView( withId(R.id.login_button)). perform ( click());
+
+
         //bugged
-        onView(allOf(withId(R.id.button), isDisplayed())).perform(click());
+        //onView(allOf(withId(R.id.button), isDisplayed())).perform(click());
+        onView(allOf(withId(R.id.txtHeader), isDescendantOfA((withId(R.id.viewpager)))))
+                .perform(click());
 
 
-
-        onView(withId(R.id.viewpager)).perform(swipeLeft());
-        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        //onView(withId(R.id.viewpager)).perform(swipeLeft());
+       // onView(withId(R.id.viewpager)).perform(swipeLeft());
 
     }
 

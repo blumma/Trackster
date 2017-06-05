@@ -55,13 +55,13 @@ public class StudentListActivity extends AppCompatActivity {
                 else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
                             Intent k = new Intent(StudentListActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
                         case 500:
                         default:
-                            Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.error_student_list, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -91,13 +91,13 @@ public class StudentListActivity extends AppCompatActivity {
                 else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
                             Intent k = new Intent(StudentListActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
                         case 500:
                         default:
-                            Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.error_student_list, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Trackster</string>
     <string name="title_activity_track_performance">TrackPerformanceActivity</string>
+    <string name="ranking_title">Gesamtpunkte</string>
+    <string name="not_logged_in">"Not logged in!"</string>
+    <string name="error_student_list">"Error while loading students list!"</string>
+    <string name="error_login">Login failed!</string>
+    <string name="stopwatch_starttime">00:00:00</string>
 </resources>

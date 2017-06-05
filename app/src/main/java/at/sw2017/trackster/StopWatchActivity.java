@@ -134,7 +134,7 @@ public class StopWatchActivity extends AppCompatActivity {
                 Minutes = 0 ;
                 MilliSeconds = 0 ;
 
-                textView.setText("00:00:00");
+                textView.setText(R.string.stopwatch_starttime);
                 ListElementsArrayList.clear();
                 adapter.notifyDataSetChanged();
             }

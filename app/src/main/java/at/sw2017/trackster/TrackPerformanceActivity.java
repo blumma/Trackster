@@ -108,7 +108,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                 else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
                             Intent k = new Intent(TrackPerformanceActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
@@ -205,7 +205,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                 else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
                             Intent k = new Intent(TrackPerformanceActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
