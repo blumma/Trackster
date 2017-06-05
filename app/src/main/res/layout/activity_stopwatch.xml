@@ -7,7 +7,7 @@
     android:background="@color/colorBackgroundLight">
 
     <TextView
-        android:text="00:00:00"
+        android:text="@string/stopwatch_starttime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -30,7 +30,7 @@
         android:id="@+id/button" />
 
     <Button
-        android:text="Pause"
+        android:text="Stop"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorPrimaryDarkText"
         android:layout_width="wrap_content"
@@ -52,20 +52,29 @@
         android:id="@+id/button3" />
 
     <Button
-        android:text="Save Lap"
+        android:text="Save"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:textColor="@color/colorAccentText"
         android:layout_marginTop="24dp"
         android:id="@+id/button4"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/button"/>
+
+    <Button
+        android:text="Save best lap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorAccentText"
+        android:layout_marginTop="6dp"
+        android:id="@+id/button5"
+        android:layout_below="@+id/button4"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/button4"
+        android:layout_below="@+id/button5"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:id="@+id/listview1"/>

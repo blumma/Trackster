@@ -66,8 +66,8 @@ public class LoginActivityTest {
         HttpUrl baseUrl = server.url("/tracksterMockServer/");
         ApiClient.BASE_URL = baseUrl.toString();
 
-        String first_name = "test@test.com";
-        String password = "test123";
+        String first_name = "pa";
+        String password = "pat";
 
         onView(withId(R.id.edit_text_username)).perform(typeText(first_name), closeSoftKeyboard());
 
@@ -76,7 +76,7 @@ public class LoginActivityTest {
         onView(withId(R.id.login_button)).perform(click());
 
         RecordedRequest request = server.takeRequest();
-        assertEquals("/api/login", request.getPath());
+        assertEquals("/tracksterMockServer/api/login", request.getPath());
 
         onView(withText("Successful login!")).
                 inRoot(withDecorView(not(is(menuActivityTestRule.getActivity().getWindow().getDecorView())))).
@@ -114,9 +114,9 @@ public class LoginActivityTest {
         onView(withId(R.id.login_button)).perform(click());
 
         RecordedRequest request = server.takeRequest();
-        assertEquals("/api/login", request.getPath());
+        assertEquals("/tracksterMockServer/api/login", request.getPath());
 
-        onView(withText("Login failed!")).
+        onView(withText(R.string.error_login)).
                 inRoot(withDecorView(not(is(menuActivityTestRule.getActivity().getWindow().getDecorView())))).
                 check(matches(isDisplayed()));
 

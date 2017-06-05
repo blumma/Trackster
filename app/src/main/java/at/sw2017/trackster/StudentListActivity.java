@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,14 +35,50 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+        getClasses();
 
-        getStudentList();
     }
 
-    private void getStudentList() {
+    private void getClasses() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<Student>> call = apiService.getStudents();
+        Call<List<Student>> call = apiService.getClasses();
+        call.enqueue(new Callback<List<Student>>() {
+
+            @Override
+            public void onResponse(Call<List<Student>>call, Response<List<Student>> response) {
+                if(response.isSuccessful()) {
+
+                    List<Student> students = response.body();
+                    populateClassList(students);
+                }
+                else {
+                    switch (response.code()) {
+                        case 401:
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
+                            Intent k = new Intent(StudentListActivity.this, LoginActivity.class);
+                            startActivity(k);
+                            break;
+                        case 500:
+                        default:
+                            Toast.makeText(getApplication(), R.string.error_student_list, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Student>>call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+
+
+    }
+
+    private void getStudentList(String clas) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<List<Student>> call = apiService.getStudentsByClass(clas);
         call.enqueue(new Callback<List<Student>>() {
 
             @Override
@@ -54,13 +91,13 @@ public class StudentListActivity extends AppCompatActivity {
                 else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
                             Intent k = new Intent(StudentListActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
                         case 500:
                         default:
-                            Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), R.string.error_student_list, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -72,28 +109,72 @@ public class StudentListActivity extends AppCompatActivity {
         });
     }
 
-    private void populateStudentList(List<Student> students) {
+    private void populateClassList(List<Student> students) {
 
-        String[] strStudents = new String[students.size()];
-        int i = 0;
+        String[] strClasses = new String[students.size() + 1];
+        strClasses[0] = "";
+        int i = 1;
 
         for (Student s: students) {
-            strStudents[i++] = (s.getVorname() + " " + s.getNachname());
+            strClasses[i++] = (s.getKlasse());
         }
+
+
+
+        final Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
+        String[] items = strClasses;
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String clas = dropdown.getSelectedItem().toString();
+                if(clas != "")
+                {
+                    getStudentList(clas);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+           /* @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+
+
+            }*/
+        });
+
+
+
+    }
+
+    private void populateStudentList(final List<Student> students) {
+
         // @mblum TODO: implement custom adapter to support StudentsList & use layout student_list_item
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
-        ListView studentList = (ListView) findViewById(R.id.student_list);
+        //ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
+        final ListView studentList = (ListView) findViewById(R.id.student_list);
+        CustomAdapter adapter =  new CustomAdapter(students,getApplicationContext());
         studentList.setAdapter(adapter);
 
         studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Student student = students.get(position);
+
                 // @mblum TODO: retreive id from custom adapter -> this will not work proberly!
-                int selectedStudentId = (int)id + 1;
+                //int selectedStudentId = (int)id + 1;
+
+                
 
                 Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
-                k.putExtra("studentId", "" + selectedStudentId);
+                k.putExtra("studentId", "" + student.getId());
                 startActivity(k);
 
                 /*String currentStudent = String.valueOf(parent.getItemAtPosition(position));

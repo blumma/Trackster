@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent k = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(k);
                 } else {
-                    Toast.makeText(getApplication(), "Login failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.error_login, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, response.errorBody().toString());
                 }
             }
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User>call, Throwable t) {
                 Log.e(TAG, t.toString());
+                Toast.makeText(getApplication(), "Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }
