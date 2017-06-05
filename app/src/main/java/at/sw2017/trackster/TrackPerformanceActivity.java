@@ -57,6 +57,106 @@ public class TrackPerformanceActivity extends AppCompatActivity {
             }
         });
 
+        final EditText et_60 = (EditText)findViewById(R.id.txt_60m);
+        et_60.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_kugel = (EditText)findViewById(R.id.txt_kugel);
+        et_kugel.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_schlag = (EditText)findViewById(R.id.txt_schlagball);
+        et_schlag.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_jump = (EditText)findViewById(R.id.txt_longjump);
+        et_jump.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_1000 = (EditText)findViewById(R.id.txt_1000m);
+        et_1000.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
         Button stopwatch = (Button) findViewById(R.id.stopwatch1);
         stopwatch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
