@@ -14,7 +14,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:text="Gesamtpunkte"
+        android:text="@string/ranking_title"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="22dp"

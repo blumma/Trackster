@@ -3,6 +3,7 @@ package at.sw2017.trackster;
 import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.IdlingPolicies;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.Button;
@@ -51,10 +52,12 @@ public class StopWatchActivityTest {
         //Problem with espresso and continious changing textfield
         //leads to => only first click gets performed
 
-        /*onView( withId(R.id.button)). perform ( click());
+        /*IdlingPolicies.setIdlingResourceTimeout(1, TimeUnit.SECONDS);
+
+        onView( withId(R.id.button)). perform ( click());
         onView( withId(R.id.button)). perform ( click());
         onView( withId(R.id.button4)).perform(click());
-        onView(withId(R.id.activity_main)).check(matches(isDisplayed()));**/
+        onView(withId(R.id.activity_main)).check(matches(isDisplayed()));*/
     }
 
 }
