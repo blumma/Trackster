@@ -134,18 +134,18 @@ public class ViewPagerActivity extends Activity {
 
                     case 1:
 
-                        textView.setText("60 Meter");
+                        textView.setText(R.string.sport_60m);
                         break;
 
                     case 2:
-                        textView.setText("1000 Meter");
+                        textView.setText(R.string.sport_1000m);
                         break;
 
                     case 3:
-                        textView.setText("Weitsprung");
+                        textView.setText(R.string.sport_jump);
                         break;
                     case 4:
-                        textView.setText("Schlagball");
+                        textView.setText(R.string.sport_rounders);
                         break;
 
                     default:

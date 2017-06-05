@@ -3,6 +3,7 @@ package at.sw2017.trackster;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -17,6 +18,8 @@ import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -49,7 +52,7 @@ public class RankingActivityTest {
     public void testMenuButton()
     {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -57,30 +60,73 @@ public class RankingActivityTest {
         onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
         Espresso.closeSoftKeyboard();
         onView( withId(R.id.login_button)). perform ( click());
+        onView( withId(R.id.button_1000m)). perform ( click());
 
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //bugged
-        //onView(allOf(withId(R.id.button), isDisplayed())).perform(click());
-        onView(allOf(withId(R.id.txtHeader), isDescendantOfA((withId(R.id.viewpager)))))
-                .perform(click());
-
-
-        //onView(withId(R.id.viewpager)).perform(swipeLeft());
-       // onView(withId(R.id.viewpager)).perform(swipeLeft());
+        onView(withId(R.id.viewpager)).check(matches(isCompletelyDisplayed()));
 
     }
 
+    @Test
     public void testSwipe()
     {
-        onView(allOf(withId(R.id.tv), withText("60Meter"))).check(matches(isDisplayed()));
-        onView(withId(R.id.viewpager)).perform(swipeRight());
-        onView(withText("1000 Meter")).check(matches(isDisplayed()));
-        onView(withId(R.id.viewpager)).perform(swipeRight());
-        onView(withText("Weitsprung")).check(matches(isDisplayed()));
-        onView(withId(R.id.viewpager)).perform(swipeRight());
-        onView(withText("Schlagball")).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
+        onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
+        Espresso.closeSoftKeyboard();
+        onView( withId(R.id.login_button)). perform ( click());
+        onView( withId(R.id.button_1000m)). perform ( click());
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.ranking_title))));
+
+        onView(withId(R.id.viewpager))
+                .perform(swipeLeft());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.sport_60m))));
         onView(withId(R.id.viewpager)).perform(swipeLeft());
-        onView(withText("Weitsprung")).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.sport_1000m))));
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.sport_jump))));
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.sport_rounders))));
 
     }
 
