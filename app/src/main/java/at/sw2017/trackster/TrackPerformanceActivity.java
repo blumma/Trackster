@@ -248,11 +248,11 @@ public class TrackPerformanceActivity extends AppCompatActivity {
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
         Log.d(TAG, String.valueOf(student.getPerformance60mRun()));
-        txt60m.setText(TimeConvert.millisecToTime(student.getPerformance60mRun()));
+        txt60m.setText(TimeConvert.secToTime(student.getPerformance60mRun()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
         Log.d(TAG, String.valueOf(student.getPerformance1000mRun()));
-        txt1000m.setText(TimeConvert.millisecToTime(student.getPerformance1000mRun()));
+        txt1000m.setText(TimeConvert.secToTime(student.getPerformance1000mRun()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         Log.d(TAG, String.valueOf(student.getPerformanceLongJump()));
@@ -289,10 +289,10 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         student.setGeburtsdatum(txtGebdatum.getText().toString());
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
-        student.setPerformance60mRun(TimeConvert.timeToMillisec(txt60m.getText().toString()));
+        student.setPerformance60mRun(TimeConvert.timeToSec(txt60m.getText().toString()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
-        student.setPerformance1000mRun(TimeConvert.timeToMillisec(txt1000m.getText().toString()));
+        student.setPerformance1000mRun(TimeConvert.timeToSec(txt1000m.getText().toString()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         student.setPerformanceLongJump(Double.parseDouble(txtLongjump.getText().toString()));
