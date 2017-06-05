@@ -1,8 +1,11 @@
 package at.sw2017.trackster;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -29,6 +32,8 @@ public class ViewPagerActivity extends Activity {
 
     private Context mContext;
     private ViewPager mViewPager;
+    ProgressDialog pd1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +41,11 @@ public class ViewPagerActivity extends Activity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_ranking);
-        ListView listview1 = new ListView(mContext);
-        ListView listview2 = new ListView(mContext);
-        ListView listview3 = new ListView(mContext);
-        ListView listview4 = new ListView(mContext);
-        ListView listview5 = new ListView(mContext);
+        final ListView listview1 = new ListView(mContext);
+        final ListView listview2 = new ListView(mContext);
+        final ListView listview3 = new ListView(mContext);
+        final ListView listview4 = new ListView(mContext);
+        final ListView listview5 = new ListView(mContext);
 
         Vector<View> pages = new Vector<View>();
 
@@ -55,7 +60,34 @@ public class ViewPagerActivity extends Activity {
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(2);
 
-        getStudentList(listview1, listview2, listview3, listview4, listview5);
+        pd1 = new ProgressDialog(this);
+
+              pd1.setTitle("Laden...");
+        pd1.setMessage("Bitte warten...");
+        pd1.setIcon(R.drawable.ic_edit_black_24dp);
+        pd1.setCancelable(false);
+        pd1.show();
+
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                getStudentList(listview1, listview2, listview3, listview4, listview5);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result)
+            {
+                pd1.dismiss();
+            }
+        }.execute();
+
+
+
+
+
     }
 
     private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3,
@@ -72,6 +104,7 @@ public class ViewPagerActivity extends Activity {
 
                     List<Student> students = response.body();
                     populateRanking(students, listview1, listview2, listview3, listview4, listview5);
+
 
                 } else {
                     switch (response.code()) {
@@ -90,6 +123,10 @@ public class ViewPagerActivity extends Activity {
             @Override
             public void onFailure(Call<List<Student>> call, Throwable t) {
             }
+
+
+
+
         });
 
     }
@@ -104,6 +141,8 @@ public class ViewPagerActivity extends Activity {
         listview4.addHeaderView(header);
         listview5.addHeaderView(header);
 
+
+
         ListAdapter cust_adapter = new RankingAdapter(mContext, students, 0);
         listview1.setAdapter(cust_adapter);
         cust_adapter = new RankingAdapter(mContext, students, 1);
@@ -114,6 +153,9 @@ public class ViewPagerActivity extends Activity {
         listview4.setAdapter(cust_adapter);
         cust_adapter = new RankingAdapter(mContext, students, 4);
         listview5.setAdapter(cust_adapter);
+
+
+
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -152,12 +194,14 @@ public class ViewPagerActivity extends Activity {
                         break;
                 }
 
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
+
         });
 
     }

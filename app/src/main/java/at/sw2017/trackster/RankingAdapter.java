@@ -1,5 +1,6 @@
 package at.sw2017.trackster;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +31,13 @@ public class RankingAdapter extends BaseAdapter {
     LayoutInflater inflater;
     int page_nr;
 
+
     public RankingAdapter(Context applicationContext, List<Student> students, int page_nr) {
         this.context = applicationContext;
         this.students = students;
         this.page_nr = page_nr;
         inflater = (LayoutInflater.from(applicationContext));
+
     }
 
     @Override
@@ -127,6 +130,8 @@ public class RankingAdapter extends BaseAdapter {
 
         mViewHolder.data.setText(Iterables.get(myTreeMultimap.keys(), position).toString());
         mViewHolder.userName.setText(Iterables.get(myTreeMultimap.values(), position));
+
+
 
         return view;
 

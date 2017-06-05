@@ -1,5 +1,6 @@
 package at.sw2017.trackster;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import retrofit2.Response;
 public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = MenuActivity.class.getSimpleName();
+    private ProgressDialog pd1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MenuActivity extends AppCompatActivity {
                 logout();
             }
         });
+
+        pd1 = new ProgressDialog(this);
     }
 
     private void logout() {
