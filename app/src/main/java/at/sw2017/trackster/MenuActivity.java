@@ -15,6 +15,10 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -63,15 +67,16 @@ public class MenuActivity extends AppCompatActivity {
         final Button buttonInput = (Button) findViewById(R.id.button_input);
         buttonInput.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), StudentListActivity.class);
+                Intent myIntent = new Intent(v.getContext(), SportActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
 
+
         final Button buttonRanking = (Button) findViewById(R.id.button_1000m);
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), ViewPagerActivity.class);
+                Intent myIntent = new Intent(v.getContext(), ViewPageActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

@@ -20,6 +20,7 @@ public class Student {
     private double performanceShotPut;
     private double performanceLongThrow;
     private double performanceLongJump;
+    private double sumPoints;
 
     public Student() {
     }
@@ -134,12 +135,11 @@ public class Student {
         this.performance1000mRun = performance1000mRun;
     }
 
-    public double getOverallScore() {
-        CalculateScore score = new CalculateScore(this.getPerformance60mRun(), this.getPerformanceLongJump(), this.getPerformanceLongThrow(),
-                this.getPerformanceShotPut(), this.getGeschlecht(), this.getGeburtsdatum());
-
-        return score.calculateOverallScore();
+    public double getSumPoints() {
+        return sumPoints;
     }
 
-
+    public void setSumPoints(double sumPoints) {
+        this.sumPoints = sumPoints;
+    }
 }

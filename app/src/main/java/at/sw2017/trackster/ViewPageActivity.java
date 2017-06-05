@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by Patrick on 26.05.2017.
  */
 
-public class ViewPagerActivity extends Activity {
+public class ViewPageActivity extends Activity {
 
     private Context mContext;
     private ViewPager mViewPager;
@@ -40,7 +40,6 @@ public class ViewPagerActivity extends Activity {
         ListView listview2 = new ListView(mContext);
         ListView listview3 = new ListView(mContext);
         ListView listview4 = new ListView(mContext);
-        ListView listview5 = new ListView(mContext);
 
         Vector<View> pages = new Vector<View>();
 
@@ -48,18 +47,16 @@ public class ViewPagerActivity extends Activity {
         pages.add(listview2);
         pages.add(listview3);
         pages.add(listview4);
-        pages.add(listview5);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        CustomPagerAdapter adapter = new CustomPagerAdapter(mContext, pages);
+        CustomPagerAdapter adapter = new CustomPagerAdapter(mContext,pages);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(2);
 
-        getStudentList(listview1, listview2, listview3, listview4, listview5);
+        getStudentList(listview1, listview2, listview3, listview4);
     }
 
-    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3,
-                                final ListView listview4, final ListView listview5) {
+    private void getStudentList(final ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<List<Student>> call = apiService.getStudents();
@@ -67,87 +64,77 @@ public class ViewPagerActivity extends Activity {
 
 
             @Override
-            public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Call<List<Student>>call, Response<List<Student>> response) {
+                if(response.isSuccessful()) {
 
                     List<Student> students = response.body();
-                    populateRanking(students, listview1, listview2, listview3, listview4, listview5);
+                    populateStudents(students, listview1, listview2, listview3, listview4);
 
-                } else {
+                }
+                else {
                     switch (response.code()) {
                         case 401:
-                            Toast.makeText(getApplication(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
-                            Intent k = new Intent(ViewPagerActivity.this, LoginActivity.class);
+                            Toast.makeText(getApplication(), "Not logged in!", Toast.LENGTH_SHORT).show();
+                            Intent k = new Intent(ViewPageActivity.this, LoginActivity.class);
                             startActivity(k);
                             break;
                         case 500:
                         default:
-                            Toast.makeText(getApplication(), R.string.error_student_list, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "Error while loading students list!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Student>> call, Throwable t) {
+            public void onFailure(Call<List<Student>>call, Throwable t) {
             }
         });
 
     }
 
-    public void populateRanking(final List<Student> students, final ListView listview1, final ListView listview2,
-                                final ListView listview3, final ListView listview4, final ListView listview5) {
-        View header = (View) getLayoutInflater().inflate(R.layout.list_view_header, null);
+    public void populateStudents(final List<Student> students,final  ListView listview1, final ListView listview2, final ListView listview3, final ListView listview4)
+    {
+        View header = (View)getLayoutInflater().inflate(R.layout.list_view_header, null);
         listview1.addHeaderView(header);
-
         listview2.addHeaderView(header);
         listview3.addHeaderView(header);
         listview4.addHeaderView(header);
-        listview5.addHeaderView(header);
-
-        ListAdapter cust_adapter = new RankingAdapter(mContext, students, 0);
-        listview1.setAdapter(cust_adapter);
-        cust_adapter = new RankingAdapter(mContext, students, 1);
-        listview2.setAdapter(cust_adapter);
-        cust_adapter = new RankingAdapter(mContext, students, 2);
-        listview3.setAdapter(cust_adapter);
-        cust_adapter = new RankingAdapter(mContext, students, 3);
-        listview4.setAdapter(cust_adapter);
-        cust_adapter = new RankingAdapter(mContext, students, 4);
-        listview5.setAdapter(cust_adapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
             public void onPageSelected(int position) {
 
-                ListAdapter cust_adapter;
                 TextView textView = (TextView) findViewById(R.id.txtHeader);
+                ListAdapter cust_adapter;
                 switch (position)
                 {
                     case 0:
-
-                        textView.setText(R.string.ranking_title);
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview1.setAdapter(cust_adapter);
+                        textView.setText("60Meter");
                         break;
 
                     case 1:
-
-                        textView.setText(R.string.sport_60m);
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview2.setAdapter(cust_adapter);
+                        textView.setText("1000 Meter");
                         break;
 
                     case 2:
-                        textView.setText(R.string.sport_1000m);
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview3.setAdapter(cust_adapter);
+                        textView.setText("Weitsprung");
                         break;
-
                     case 3:
-                        textView.setText(R.string.sport_jump);
+                        cust_adapter = new RankingAdapter(mContext, students, position);
+                        listview4.setAdapter(cust_adapter);
+                        textView.setText("Schlagball");
                         break;
-                    case 4:
-                        textView.setText(R.string.sport_rounders);
-                        break;
-
                     default:
                         break;
                 }
@@ -161,6 +148,7 @@ public class ViewPagerActivity extends Activity {
         });
 
     }
+
 
 }
 
