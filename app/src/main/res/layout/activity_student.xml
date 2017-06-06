@@ -105,7 +105,7 @@
         <EditText
             android:id="@+id/gebDateText"
             android:layout_width="120dp"
-            android:hint="dd.mm.yyyy"
+            android:hint="dd-mm-yyyy"
             android:layout_height="59dp" />
 
 

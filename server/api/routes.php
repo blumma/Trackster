@@ -304,7 +304,7 @@ $app->get('/api/students/{class}', function ($request, $response, $args) {
 $app->post('/api/student/{id}', function ($request, $response, $args) {
 
   $student = $request->getParsedBody();
-
+ 
   $dbh = DbHandler::getDbh();
 
   $stmt = $dbh->prepare("UPDATE students SET klasse = ?, nachname = ?, "
@@ -326,6 +326,44 @@ $app->post('/api/student/{id}', function ($request, $response, $args) {
       $student['performanceLongJump'],
       $student['sumPoints'],
       $args['id']
+    );
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  return sendRestResponse($response);
+})->add($isLoggedIn);
+
+/**
+ * POST /api/addStudent
+ *
+ * Save Student to db.
+ *
+ */
+$app->post('/api/addStudent', function ($request, $response, $args) {
+
+  $student = $request->getParsedBody();
+
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("Insert Into students(klasse,nachname,vorname,"
+    ."geschlecht,geburtsdatum,performance60mRun,performance1000mRun,"
+	."performanceShotPut,performanceLongThrow,performanceLongJump,sumPoints)"
+    . "VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+  
+  $stmt->bind_param("sssssdddddd", 
+      $student['klasse'], 
+      $student['nachname'], 
+      $student['vorname'],
+      $student['geschlecht'],
+      $student['geburtsdatum'],
+	  $student['performance60mRun'],
+      $student['performance1000mRun'],
+      $student['performanceShotPut'],
+      $student['performanceLongThrow'],
+      $student['performanceLongJump'],
+      $student['sumPoints']
     );
   
   if (!$stmt->execute()) {
