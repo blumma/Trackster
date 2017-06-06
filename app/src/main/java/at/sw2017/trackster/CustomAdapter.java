@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import at.sw2017.trackster.models.Student;
 public class CustomAdapter extends ArrayAdapter<Student> implements View.OnClickListener {
 
     private List<Student> dataSet;
+    private List<Student> dataSetOriginal;
     Context mContext;
 
     // View lookup cache
@@ -32,6 +36,7 @@ public class CustomAdapter extends ArrayAdapter<Student> implements View.OnClick
     public CustomAdapter(List<Student> data, Context context) {
         super(context, R.layout.row_item, data);
         this.dataSet = data;
+        this.dataSetOriginal = data;
         this.mContext=context;
 
     }
@@ -49,12 +54,24 @@ public class CustomAdapter extends ArrayAdapter<Student> implements View.OnClick
         }
     }
 
+    public List<Student> getDataSet() {
+        return dataSet;
+    }
+
     private int lastPosition = -1;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Student dataModel = getItem(position);
+        //Student dataModel = dataSet.getItem(position);
+        /*if(position>dataSet.size())
+            return null;*/
+
+        Student dataModel = new Student();
+
+        if(position < dataSet.size())
+            dataModel = dataSet.get(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -81,13 +98,60 @@ public class CustomAdapter extends ArrayAdapter<Student> implements View.OnClick
         result.startAnimation(animation);
         lastPosition = position;*/
 
-        viewHolder.txtVorname.setText(dataModel.getVorname());
-        viewHolder.txtNachname.setText(dataModel.getNachname());
+        if(position < dataSet.size()) {
+            viewHolder.txtVorname.setText(dataModel.getVorname());
+            viewHolder.txtNachname.setText(dataModel.getNachname());
+        }
+        else{
+            viewHolder.txtVorname.setText("");
+            viewHolder.txtNachname.setText("");
+        }
        // viewHolder.txtid.setText(dataModel.getId());
 
         // Return the completed view to render on screen
         return convertView;
 
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+            ArrayList<Student> results;
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults oReturn = new FilterResults();
+                results = new ArrayList<Student>();
+                results.clear();
+
+                if(constraint == null)
+                    dataSet = dataSetOriginal;
+
+                if (constraint != null) {
+                    if (dataSetOriginal != null && dataSetOriginal.size() > 0) {
+                        for (final Student g : dataSetOriginal) {
+                            String s = g.getVorname();
+                            if (g.getVorname().toLowerCase()
+                                    .contains(constraint.toString().toLowerCase()) || g.getNachname().toLowerCase().contains(constraint.toString().toLowerCase()))
+                                results.add(g);
+                        }
+                    }
+                    oReturn.values = results;
+                    oReturn.count = results.size();
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                dataSet = (ArrayList<Student>) results.values;
+                if (results.count > 0) {
+                    notifyDataSetChanged();
+                } else {
+                    notifyDataSetInvalidated();
+                }
+            }
+        };
     }
 
 }

@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,15 +35,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StudentListActivity extends AppCompatActivity {
+public class StudentListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private static final String TAG = StudentListActivity.class.getSimpleName();
     private int number_of_students = 0;
+    ListView studentList;
+    CustomAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+
+        SearchView mSearchView=(SearchView) findViewById(R.id.simpleSearchView);
+        mSearchView.setOnQueryTextListener(this);
+        studentList = (ListView) findViewById(R.id.student_list);
 
         getStudentList("1a");
 
@@ -174,31 +184,39 @@ public class StudentListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+            ((CustomAdapter)studentList.getAdapter()).getFilter().filter(newText);
+
+        return true;
+    }
+
     private void populateStudentList(final List<Student> students) {
 
-        // @mblum TODO: implement custom adapter to support StudentsList & use layout student_list_item
-        //ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
+        // @mblum TODO: implement custom listAdapter to support StudentsList & use layout student_list_item
+        //ListAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strStudents);
         final ListView studentList = (ListView) findViewById(R.id.student_list);
-        CustomAdapter adapter =  new CustomAdapter(students,getApplicationContext());
-        studentList.setAdapter(adapter);
+        listAdapter =  new CustomAdapter(students,getApplicationContext());
+
+        studentList.setAdapter(listAdapter);
+
 
         studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Student student = students.get(position);
-
-                // @mblum TODO: retreive id from custom adapter -> this will not work proberly!
-                //int selectedStudentId = (int)id + 1;
-
-                
-
-                Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
-                k.putExtra("studentId", "" + student.getId());
-                startActivity(k);
-
-                /*String currentStudent = String.valueOf(parent.getItemAtPosition(position));
-                Toast.makeText(getApplication(), "Clicked Item: " + currentStudent, Toast.LENGTH_SHORT).show();*/
+                if(position < ((CustomAdapter)studentList.getAdapter()).getDataSet().size()) {
+                    Student student = ((CustomAdapter) studentList.getAdapter()).getDataSet().get(position);
+                    Intent k = new Intent(StudentListActivity.this, TrackPerformanceActivity.class);
+                    k.putExtra("studentId", "" + student.getId());
+                    startActivity(k);
+                }
             }
         });
     }
