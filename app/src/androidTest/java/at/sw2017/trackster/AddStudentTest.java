@@ -77,12 +77,12 @@ public class AddStudentTest {
         onView( withId(R.id.add_student)).check(matches(isCompletelyDisplayed()));
         onView(withId(R.id.editForename)).perform(replaceText("Martin"));
         onView(withId(R.id.editSurename)).perform(replaceText("Sonneborn"));
-        onView(withId(R.id.spinnerClass)).perform(click());
+       /* onView(withId(R.id.spinnerClass)).perform(click());
         onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
         onView(withId(R.id.spinnerGrade)).perform(click());
-        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());*/
         onView(withId(R.id.checkBox)).perform(click());
-        onView(withId(R.id.gebDateText)).perform(replaceText("01.02.2003"));
+        onView(withId(R.id.gebDateText)).perform(replaceText("01-02-2003"));
 
         onView(withId(R.id.button_ok)).perform(click());
 

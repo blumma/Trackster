@@ -44,4 +44,7 @@ public interface ApiInterface {
 
     @POST("api/student/{studentId}")
     Call<ResponseBody> updateStudentById(@Path("studentId") int studentId, @Body Student student);
+
+    @POST("api/addStudent")
+    Call<ResponseBody> addStudent(@Body Student student);
 }
