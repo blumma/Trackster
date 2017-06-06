@@ -20,6 +20,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -42,13 +43,6 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class AddStudentTest {
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("at.sw2017.trackster", appContext.getPackageName());
-    }
 
     @Rule
     public ActivityTestRule<StudentListActivity> studentListActivityTestRule =
@@ -81,5 +75,17 @@ public class AddStudentTest {
         }
         onView( withId(R.id.button_add_student)). perform ( click());
         onView( withId(R.id.add_student)).check(matches(isCompletelyDisplayed()));
+        onView(withId(R.id.editForename)).perform(replaceText("Martin"));
+        onView(withId(R.id.editSurename)).perform(replaceText("Sonneborn"));
+        onView(withId(R.id.spinnerClass)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onView(withId(R.id.spinnerGrade)).perform(click());
+        onData(allOf(is(instanceOf(String.class)))).atPosition(1).perform(click());
+        onView(withId(R.id.checkBox)).perform(click());
+        onView(withId(R.id.gebDateText)).perform(replaceText("01.02.2003"));
+
+        onView(withId(R.id.button_ok)).perform(click());
+
+        Thread.sleep(5000);
     }
 }

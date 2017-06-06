@@ -47,7 +47,8 @@ public class StudentListActivity extends AppCompatActivity {
         buttonAddStudent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent k = new Intent(StudentListActivity.this, StudentActivity.class);
-                k.putExtra("numberStudents", number_of_students+"");
+                final Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
+                k.putExtra("classString", dropdown.getSelectedItem().toString());
                 startActivity(k);
             }
         });
@@ -143,6 +144,7 @@ public class StudentListActivity extends AppCompatActivity {
         String[] items = strClasses;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(1);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
