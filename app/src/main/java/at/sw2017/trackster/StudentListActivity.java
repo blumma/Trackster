@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -22,6 +25,7 @@ import java.util.List;
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
 import at.sw2017.trackster.models.Student;
+import at.sw2017.trackster.models.TimeConvert;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,11 +34,25 @@ import retrofit2.Response;
 public class StudentListActivity extends AppCompatActivity {
 
     private static final String TAG = StudentListActivity.class.getSimpleName();
+    private int number_of_students = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+
+        getStudentList("1a");
+
+        final ImageButton buttonAddStudent = (ImageButton) findViewById(R.id.button_add_student);
+        buttonAddStudent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent k = new Intent(StudentListActivity.this, StudentActivity.class);
+                final Spinner dropdown = (Spinner)findViewById(R.id.dpClass);
+                k.putExtra("classString", dropdown.getSelectedItem().toString());
+                startActivity(k);
+            }
+        });
+
         getClasses();
 
     }
@@ -50,6 +68,7 @@ public class StudentListActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
 
                     List<Student> students = response.body();
+                    number_of_students = students.size();
                     populateClassList(students);
                 }
                 else {
@@ -125,6 +144,7 @@ public class StudentListActivity extends AppCompatActivity {
         String[] items = strClasses;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(1);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
