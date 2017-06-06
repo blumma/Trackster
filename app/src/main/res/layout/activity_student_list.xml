@@ -54,18 +54,10 @@
             android:id="@+id/textView_top"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:text="Schüler"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <SearchView
-            android:id="@+id/simpleSearchView"
-            android:iconifiedByDefault="false"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".60"
-            android:queryHint="Search Here" />
 
         <ImageButton
             android:id="@+id/button_add_student"
@@ -76,6 +68,14 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_person_add_black_24dp" />
+
+        <SearchView
+            android:id="@+id/simpleSearchView"
+            android:iconifiedByDefault="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".60"
+            android:queryHint="Search Here" />
 
     </LinearLayout>
 
