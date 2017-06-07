@@ -8,12 +8,26 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
   public function setUp() {
     $this->http = new GuzzleHttp\Client([
       'base_uri' => 'http://mobile-apps.dev',
+      'cookies' => true,
       'http_errors' => false
     ]);
+
+    $response = $this->http->request('POST', '/api/login', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => [
+          'email' => 'test@test.com',
+          'pwd' => 'test123'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
   }
   
 
   public function tearDown() {
+    $this->http->request('POST', '/api/logout');
     $this->http = null;
   }
 
@@ -109,7 +123,7 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
       "nachname" => "Ashborne",
       "vorname" => "Andra",
       "geschlecht" => "m",
-      "geburtsdatum" => format('d.m.Y'), // H:i:s
+      "geburtsdatum" => date('Y-m-d H:i:s'), // H:i:s
       "performance60mRun" => 99,
       "performance1000mRun" => 3599,
       "performanceShotPut" => 0,
@@ -142,6 +156,10 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals("application/json", $contentType);
 
     $response_data = json_decode($response->getBody(), true);
+
+    // adopt date format
+    $student['geburtsdatum'] = date('Y-m-d', strtotime($student['geburtsdatum']));
+
     $this->assertEquals(json_encode($student), json_encode($response_data));
   }
 

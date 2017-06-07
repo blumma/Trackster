@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<phpunit bootstrap="vendor/autoload.php">  
+<phpunit bootstrap="vendor/autoload.php" verbose="true"> 
     <testsuites>
         <testsuite name="REST API Test Suite">
-            <directory suffix=".php">./tests/</directory>
+            <directory suffix=".php">tests/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">api/</directory>
+            <directory suffix=".php">public/</directory>
+            <exclude>
+                <directory suffix=".php">tests/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./report/codeCoverage" charset="UTF-8"
+            yui="true" highlight="true"
+            lowUpperBound="50" highLowerBound="80"/>
+    </logging>
 </phpunit>
