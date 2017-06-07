@@ -48,17 +48,18 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class StudentListActivityTest {
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("at.sw2017.trackster", appContext.getPackageName());
-    }
 
     @Rule
     public ActivityTestRule<StudentListActivity> studentListActivityTestRule =
             new ActivityTestRule<>(StudentListActivity.class, true, true);
+
+public void useAppContext() throws Exception {
+
+        // Context of the app under test.
+    Context appContext = InstrumentationRegistry.getTargetContext();
+
+    assertEquals("at.sw2017.trackster", appContext.getPackageName());
+}
 
 
     @Test
@@ -69,20 +70,23 @@ public class StudentListActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        try {
-            onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
-            onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
-            Espresso.closeSoftKeyboard();
-            onView(withId(R.id.login_button)).perform(click());
-        }
-        catch (NoMatchingViewException e){
-            //Already logged in
-        }
 
-        onView( withId(R.id.button_input)). perform ( click());
         onView( withId(R.id.dpClass)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("1a"))).perform(click());
         onView(withId(R.id.dpClass)).check(matches(withSpinnerText(containsString("1a"))));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
 
 
     }
@@ -102,12 +106,24 @@ public class StudentListActivityTest {
         } catch (NoMatchingViewException e) {
             //Already logged in
         }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.button_input)).perform(click());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.simpleSearchView)).perform(typeText("Myriam"));
 
         onData(anything()).inAdapterView(withId(R.id.student_list)).atPosition(0).perform(click());
         onView(withId(R.id.txt_vorname)).check(matches(withText("Myriam")));
+
+
     }
 
 
@@ -146,6 +162,21 @@ public class StudentListActivityTest {
                 check(matches(isDisplayed()));
 
         server.shutdown();
+
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
