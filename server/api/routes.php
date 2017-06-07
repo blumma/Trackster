@@ -358,7 +358,7 @@ $app->post('/api/addStudent', function ($request, $response, $args) {
       $student['vorname'],
       $student['geschlecht'],
       $student['geburtsdatum'],
-	  $student['performance60mRun'],
+	    $student['performance60mRun'],
       $student['performance1000mRun'],
       $student['performanceShotPut'],
       $student['performanceLongThrow'],
@@ -370,7 +370,13 @@ $app->post('/api/addStudent', function ($request, $response, $args) {
     return sendErrorReponse($response, $stmt->error);
   }
 
-  return sendRestResponse($response);
+  $data = array();
+
+  if ($dbh->affected_rows > 0) {
+    $data['id'] = $dbh->insert_id;
+  }
+
+  return sendRestResponse($response, $data);
 })->add($isLoggedIn);
 
 ?>
