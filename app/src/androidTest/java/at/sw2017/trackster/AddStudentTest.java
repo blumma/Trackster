@@ -52,6 +52,7 @@ public class AddStudentTest {
     @Test
     public void testAddStudent() throws Exception
     {
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
