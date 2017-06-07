@@ -58,7 +58,7 @@ public class RankingAdapter extends BaseAdapter {
                 Collections.sort(myStundents, new Comparator<Student>() {
                     @Override
                     public int compare(Student s1, Student s2) {
-                        return -1 * Double.compare(s1.getPerformance60mRun(), s2.getPerformance60mRun());
+                        return Double.compare(s1.getPerformance60mRun(), s2.getPerformance60mRun());
                     }
                 });
                 break;
@@ -66,7 +66,7 @@ public class RankingAdapter extends BaseAdapter {
                 Collections.sort(myStundents, new Comparator<Student>() {
                     @Override
                     public int compare(Student s1, Student s2) {
-                        return -1 * Double.compare(s1.getPerformance1000mRun(), s2.getPerformance1000mRun());
+                        return Double.compare(s1.getPerformance1000mRun(), s2.getPerformance1000mRun());
                     }
                 });
                 break;

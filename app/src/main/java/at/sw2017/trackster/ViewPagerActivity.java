@@ -129,12 +129,40 @@ public class ViewPagerActivity extends Activity {
         });
         cust_adapter = new RankingAdapter(mContext, students, 1);
         listview2.setAdapter(cust_adapter);
+        listview2.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                listview2.removeOnLayoutChangeListener(this);
+                ringProgressDialog.dismiss();
+            }
+        });
         cust_adapter = new RankingAdapter(mContext, students, 2);
         listview3.setAdapter(cust_adapter);
+        listview3.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                listview3.removeOnLayoutChangeListener(this);
+                ringProgressDialog.dismiss();
+            }
+        });
         cust_adapter = new RankingAdapter(mContext, students, 3);
         listview4.setAdapter(cust_adapter);
+        listview4.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                listview4.removeOnLayoutChangeListener(this);
+                ringProgressDialog.dismiss();
+            }
+        });
         cust_adapter = new RankingAdapter(mContext, students, 4);
         listview5.setAdapter(cust_adapter);
+        listview5.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                listview5.removeOnLayoutChangeListener(this);
+                ringProgressDialog.dismiss();
+            }
+        });
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
