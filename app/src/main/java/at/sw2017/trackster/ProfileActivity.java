@@ -36,10 +36,6 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
-
         final Button buttonChange = (Button) findViewById(R.id.button_change);
         buttonChange.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -51,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String new_pw = ((EditText) findViewById(R.id.edit_text_new_password)).getText().toString();
 
                 ProfileActivity.this.actNewPwInDatabase(u, new_pw);
+                finish();
 
             }
         });
