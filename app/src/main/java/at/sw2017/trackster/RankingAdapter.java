@@ -12,6 +12,10 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import at.sw2017.trackster.models.CalculateScore;
@@ -19,6 +23,10 @@ import at.sw2017.trackster.models.Student;
 
 public class RankingAdapter extends BaseAdapter {
 
+    private Student[] ranks;
+    private final int size;
+
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public class ViewHolder {
         private TextView userName;
@@ -26,20 +34,68 @@ public class RankingAdapter extends BaseAdapter {
     }
 
     Context context;
-    List<Student> students;
     LayoutInflater inflater;
     int page_nr;
 
     public RankingAdapter(Context applicationContext, List<Student> students, int page_nr) {
         this.context = applicationContext;
-        this.students = students;
+        this.size = students.size();
+        List<Student> myStundents = new ArrayList<>(students);
         this.page_nr = page_nr;
         inflater = (LayoutInflater.from(applicationContext));
+
+
+        switch (page_nr) {
+            case 0:
+                Collections.sort(myStundents, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student s1, Student s2) {
+                        return -1 * Double.compare(s1.getOverallScore(), s2.getOverallScore());
+                    }
+                });
+                break;
+            case 1:
+                Collections.sort(myStundents, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student s1, Student s2) {
+                        return -1 * Double.compare(s1.getPerformance60mRun(), s2.getPerformance60mRun());
+                    }
+                });
+                break;
+            case 2:
+                Collections.sort(myStundents, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student s1, Student s2) {
+                        return -1 * Double.compare(s1.getPerformance1000mRun(), s2.getPerformance1000mRun());
+                    }
+                });
+                break;
+            case 3:
+                Collections.sort(myStundents, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student s1, Student s2) {
+                        return -1 * Double.compare(s1.getPerformanceLongJump(), s2.getPerformanceLongJump());
+                    }
+                });
+                break;
+            case 4:
+                Collections.sort(myStundents, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student s1, Student s2) {
+                        return -1 * Double.compare(s1.getPerformanceLongThrow(), s2.getPerformanceLongThrow());
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+
+        ranks = myStundents.toArray(new Student[myStundents.size()]);
     }
 
     @Override
     public int getCount() {
-        return students.size();
+        return size;
     }
 
     @Override
@@ -71,65 +127,27 @@ public class RankingAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) view.getTag();
         }
 
-        SortedSetMultimap<Double, String> myTreeMultimap = TreeMultimap.create();
-        SortedSetMultimap<Double, String> reverseMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
-
         switch (page_nr) {
             case 0:
-
-                for (Student s : students) {
-
-                    CalculateScore score = new CalculateScore(s.getPerformance60mRun(), s.getPerformanceLongJump(), s.getPerformanceLongThrow(),
-                            s.getPerformanceShotPut(), s.getGeschlecht(),s.getGeburtsdatum());
-
-                    double sum = score.calculateOverallScore();
-                    reverseMap.put(score.round(sum, 2), s.getVorname() + " " + s.getNachname());
-                }
-                myTreeMultimap = reverseMap;
+                mViewHolder.data.setText(df.format(ranks[position].getOverallScore()));
                 break;
-
             case 1:
-                for (Student s : students) {
-                    myTreeMultimap.put(s.getPerformance60mRun(), s.getVorname() + " " + s.getNachname());
-                }
-                System.out.println(myTreeMultimap);
+                mViewHolder.data.setText(df.format(ranks[position].getPerformance60mRun()));
                 break;
-
             case 2:
-                for (Student s : students) {
-                    myTreeMultimap.put(s.getPerformance1000mRun(), s.getVorname() + " " + s.getNachname());
-                }
-
-
+                mViewHolder.data.setText(df.format(ranks[position].getPerformance1000mRun()));
                 break;
             case 3:
-
-                for (Student s : students) {
-                    reverseMap.put(s.getPerformanceLongJump(), s.getVorname() + " " + s.getNachname());
-                }
-                myTreeMultimap = reverseMap;
-
+                mViewHolder.data.setText(df.format(ranks[position].getPerformanceLongJump()));
                 break;
-
             case 4:
-
-                for (Student s : students) {
-                    reverseMap.put(s.getPerformanceLongThrow(), s.getVorname() + " " + s.getNachname());
-                }
-                myTreeMultimap = reverseMap;
-
+                mViewHolder.data.setText(df.format(ranks[position].getPerformanceLongThrow()));
                 break;
-
             default:
-
                 break;
         }
-
-        mViewHolder.data.setText(Iterables.get(myTreeMultimap.keys(), position).toString());
-        mViewHolder.userName.setText(Iterables.get(myTreeMultimap.values(), position));
-
+        mViewHolder.userName.setText(ranks[position].getVorname() + " " + ranks[position].getNachname());
         return view;
-
     }
 }
 
