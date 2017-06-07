@@ -11,6 +11,7 @@ import android.widget.Toast;
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
 import at.sw2017.trackster.api.SessionCookieStore;
+import at.sw2017.trackster.models.ProfileActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,6 +73,14 @@ public class MenuActivity extends AppCompatActivity {
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), ViewPagerActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        final Button buttonProfile = (Button) findViewById(R.id.button_user_profile);
+        buttonRanking.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), ProfileActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
