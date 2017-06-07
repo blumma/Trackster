@@ -373,4 +373,37 @@ $app->post('/api/addStudent', function ($request, $response, $args) {
   return sendRestResponse($response);
 })->add($isLoggedIn);
 
+/**
+ * POST /api/users/{newPw}
+ *
+ * Save changed of specific student to DB.
+ *
+ */
+$app->post('/api/users/{newPw}', function ($request, $response, $args) {
+
+  $parsedBody = $request->getParsedBody();
+  
+    $pwd = '';
+  $email = '';
+  $newPw = '';
+
+  if (isset($parsedBody['pwd'])) $pwd = $parsedBody['pwd'];
+  if (isset($parsedBody['email'])) $email = $parsedBody['email'];
+  if (isset($parsedBody['newPw'])) $newPw = $parsedBody['newPw'];
+ 
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("UPDATE users SET pwd = ? "
+    . "WHERE email=? AND pwd=?");
+  
+  $stmt->bind_param("sss", $newPw, $email, $pwd,);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  return sendRestResponse($response);
+})->add($isLoggedIn);
+
+
 ?>
