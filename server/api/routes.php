@@ -304,7 +304,7 @@ $app->get('/api/students/{class}', function ($request, $response, $args) {
 $app->post('/api/student/{id}', function ($request, $response, $args) {
 
   $student = $request->getParsedBody();
-
+ 
   $dbh = DbHandler::getDbh();
 
   $stmt = $dbh->prepare("UPDATE students SET klasse = ?, nachname = ?, "
@@ -334,5 +334,120 @@ $app->post('/api/student/{id}', function ($request, $response, $args) {
 
   return sendRestResponse($response);
 })->add($isLoggedIn);
+
+/**
+ * POST /api/addStudent
+ *
+ * Save Student to db.
+ *
+ */
+$app->post('/api/addStudent', function ($request, $response, $args) {
+
+  $student = $request->getParsedBody();
+
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("Insert Into students(klasse,nachname,vorname,"
+    ."geschlecht,geburtsdatum,performance60mRun,performance1000mRun,"
+	."performanceShotPut,performanceLongThrow,performanceLongJump,sumPoints)"
+    . "VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+  
+  $stmt->bind_param("sssssdddddd", 
+      $student['klasse'], 
+      $student['nachname'], 
+      $student['vorname'],
+      $student['geschlecht'],
+      $student['geburtsdatum'],
+	    $student['performance60mRun'],
+      $student['performance1000mRun'],
+      $student['performanceShotPut'],
+      $student['performanceLongThrow'],
+      $student['performanceLongJump'],
+      $student['sumPoints']
+    );
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  $data = array();
+
+  if ($dbh->affected_rows > 0) {
+    $data['id'] = $dbh->insert_id;
+  }
+
+  return sendRestResponse($response, $data);
+})->add($isLoggedIn);
+
+
+/**
+ * POST /api/users/{id}
+ *
+ * Update an existing user by id.
+ *
+ */
+$app->post('/api/users/{id}', function ($request, $response, $args) {
+
+  $user_id = $args['id'];
+  $user = $request->getParsedBody();
+
+  $currentUser = $_SESSION['user'];
+
+  if ($user_id != $currentUser['id']) {
+    return sendErrorReponse($response, 'No permissions.');
+  }
+ 
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("UPDATE users SET pwd = ? "
+    . "WHERE id=? LIMIT 1;");
+  
+  $stmt->bind_param("si", $user['pwd'], $user_id);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  return sendRestResponse($response);
+})->add($isLoggedIn);
+
+
+/**
+ * Get /api/users/{id}
+ *
+ * Get an existing user by id
+ *
+ */
+$app->get('/api/users/{id}', function ($request, $response, $args) {
+
+  $user_id = $args['id'];
+  $currentUser = $_SESSION['user'];
+
+  if ($user_id != $currentUser['id']) {
+    return sendErrorReponse($response, 'No permissions.');
+  }
+ 
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("SELECT id, firstName, lastName, email, pwd, "
+    . "createdAt FROM users WHERE id=?;");
+  
+  $stmt->bind_param("i", $user_id);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  $result = $stmt->get_result();
+
+  if ($result->num_rows <= 0) {
+    return sendErrorReponse($response, "User not found.", 404);
+  }
+
+  $user = $result->fetch_assoc();
+
+  return sendRestResponse($response, $user);
+})->add($isLoggedIn);
+
 
 ?>

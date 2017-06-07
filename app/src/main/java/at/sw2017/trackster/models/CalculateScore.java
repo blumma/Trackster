@@ -44,13 +44,14 @@ public class CalculateScore {
         String[] date_split_student = geburtsdatum.split("-");
         int student_year = Integer.parseInt(date_split_student[0]);
 
-        System.out.println(split_date[0]);
-        System.out.println(date_split_student[0]);
+        //System.out.println(split_date[0]);
+        //System.out.println(date_split_student[0]);
 
         boolean young = false;
         if(actual_year - student_year < 15)
         {
             young = true;
+            //System.out.println("is young");
         }
 
         if(gender.equals("m"))
@@ -68,18 +69,18 @@ public class CalculateScore {
             if(kugelstossen > 0 && young == false)
             {
                 points_kugelstossen = round(jumps_throws(82.491673, 178, 0.9, kugelstossen ),2);
-                System.out.println("kugel");
+                //System.out.println("kugel");
 
             }
             if(schlagball > 0 && young == true)
             {
                 points_schlagball = round(jumps_throws(18, 800, 0.9, schlagball ),2);
-                System.out.println("schlag");
+                //System.out.println("schlag");
             }
         }
         else
         {
-            System.out.println("w");
+            //System.out.println("w");
             if(run_60m > 0)
             {
                 points_60m = round(runs(19.742424, 1417, 2.1, run_60m ),2);
@@ -91,13 +92,13 @@ public class CalculateScore {
             if(kugelstossen > 0 && young == false)
             {
                 points_kugelstossen = round(jumps_throws(83.435373, 130, 0.9, kugelstossen ),2);
-                System.out.println("Kugel");
+                //System.out.println("Kugel");
 
             }
             if(schlagball > 0 && young == true)
             {
                 points_schlagball = round(jumps_throws(22, 500, 0.9, schlagball ),2);
-                System.out.println("Schlag");
+                //System.out.println("Schlag");
             }
         }
 

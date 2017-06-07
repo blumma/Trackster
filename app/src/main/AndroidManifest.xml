@@ -26,6 +26,7 @@
         <activity android:name=".StudentActivity" />
         <activity android:name=".TrackPerformanceActivity" />
         <activity android:name=".ViewPagerActivity" />
+        <activity android:name=".ProfileActivity" />
     </application>
 
 </manifest>

@@ -75,5 +75,18 @@ public class MenuActivity extends AppCompatActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
+
+
+
+        final Button buttonProfile = (Button) findViewById(R.id.button_user_profile);
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                String user_string = intent.getStringExtra("User");
+                Intent myIntent = new Intent(v.getContext(), ProfileActivity.class);
+                myIntent.putExtra("User", user_string);
+                startActivityForResult(myIntent, 0);
+            }
+        });
     }
 }

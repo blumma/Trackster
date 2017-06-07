@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
     private static final String TAG = TrackPerformanceActivity.class.getSimpleName();
     private static final String METERS_1000 = "1000m";
     private static final String METERS_60 = "60m";
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,106 @@ public class TrackPerformanceActivity extends AppCompatActivity {
                     saveStudentPerformance(student);
                 } catch (ParseException e) {
                     Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        final EditText et_60 = (EditText)findViewById(R.id.txt_60m);
+        et_60.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_kugel = (EditText)findViewById(R.id.txt_kugel);
+        et_kugel.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_schlag = (EditText)findViewById(R.id.txt_schlagball);
+        et_schlag.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_jump = (EditText)findViewById(R.id.txt_longjump);
+        et_jump.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        final EditText et_1000 = (EditText)findViewById(R.id.txt_1000m);
+        et_1000.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus)
+                {
+                    Student student = null;
+                    try {
+                        student = getStudentDataFromView(currentStudentId);
+                        saveStudentPerformance(student);
+                    } catch (ParseException e) {
+                        Toast.makeText(getApplication(), "Wrong date format! ", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
@@ -148,24 +250,24 @@ public class TrackPerformanceActivity extends AppCompatActivity {
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
         Log.d(TAG, String.valueOf(student.getPerformance60mRun()));
-        txt60m.setText(TimeConvert.millisecToTime(student.getPerformance60mRun()));
+        txt60m.setText(TimeConvert.secToTime(student.getPerformance60mRun()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
         Log.d(TAG, String.valueOf(student.getPerformance1000mRun()));
-        txt1000m.setText(TimeConvert.millisecToTime(student.getPerformance1000mRun()));
+        txt1000m.setText(TimeConvert.secToTime(student.getPerformance1000mRun()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         Log.d(TAG, String.valueOf(student.getPerformanceLongJump()));
-        txtLongjump.setText(String.valueOf(student.getPerformanceLongJump()));
+        txtLongjump.setText(df.format(student.getPerformanceLongJump()));
 
         EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
-        txtKugel.setText(String.valueOf(student.getPerformanceShotPut()));
+        txtKugel.setText(df.format(student.getPerformanceShotPut()));
 
         EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
-        txtSchlag.setText(String.valueOf(student.getPerformanceLongThrow()));
+        txtSchlag.setText(df.format(student.getPerformanceLongThrow()));
 
         EditText txtAll = (EditText) findViewById(R.id.txt_all);
-        txtAll.setText(String.valueOf(student.getOverallScore()));
+        txtAll.setText(df.format(student.getOverallScore()));
 
     }
 
@@ -189,23 +291,23 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         student.setGeburtsdatum(txtGebdatum.getText().toString());
 
         EditText txt60m = (EditText) findViewById(R.id.txt_60m);
-        student.setPerformance60mRun(TimeConvert.timeToMillisec(txt60m.getText().toString()));
+        student.setPerformance60mRun(TimeConvert.timeToSec(txt60m.getText().toString()));
 
         EditText txt1000m = (EditText) findViewById(R.id.txt_1000m);
-        student.setPerformance1000mRun(TimeConvert.timeToMillisec(txt1000m.getText().toString()));
+        student.setPerformance1000mRun(TimeConvert.timeToSec(txt1000m.getText().toString()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
-        student.setPerformanceLongJump(Double.parseDouble(txtLongjump.getText().toString()));
+        student.setPerformanceLongJump(df.parse(txtLongjump.getText().toString()).doubleValue());
 
         EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
-        student.setPerformanceLongThrow(Double.parseDouble(txtSchlag.getText().toString()));
+        student.setPerformanceLongThrow(df.parse(txtSchlag.getText().toString()).doubleValue());
 
         EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
-        student.setPerformanceShotPut(Double.parseDouble(txtKugel.getText().toString()));
+        student.setPerformanceShotPut(df.parse(txtKugel.getText().toString()).doubleValue());
 
         // Recalculate
         EditText txtAll = (EditText) findViewById(R.id.txt_all);
-        txtAll.setText(String.valueOf(student.getOverallScore()));
+        txtAll.setText(df.format(student.getOverallScore()));
 
         return student;
     }

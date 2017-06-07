@@ -8,12 +8,26 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
   public function setUp() {
     $this->http = new GuzzleHttp\Client([
       'base_uri' => 'http://mobile-apps.dev',
+      'cookies' => true,
       'http_errors' => false
     ]);
+
+    $response = $this->http->request('POST', '/api/login', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => [
+          'email' => 'test@test.com',
+          'pwd' => 'test123'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
   }
   
 
   public function tearDown() {
+    $this->http->request('POST', '/api/logout');
     $this->http = null;
   }
 
@@ -109,7 +123,7 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
       "nachname" => "Ashborne",
       "vorname" => "Andra",
       "geschlecht" => "m",
-      "geburtsdatum" => format('d.m.Y'), // H:i:s
+      "geburtsdatum" => date('Y-m-d H:i:s'), // H:i:s
       "performance60mRun" => 99,
       "performance1000mRun" => 3599,
       "performanceShotPut" => 0,
@@ -142,8 +156,137 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals("application/json", $contentType);
 
     $response_data = json_decode($response->getBody(), true);
+
+    // adopt date format
+    $student['geburtsdatum'] = date('Y-m-d', strtotime($student['geburtsdatum']));
+
     $this->assertEquals(json_encode($student), json_encode($response_data));
   }
+
+  public function test_get_studentClasses() {
+
+    $response = $this->http->request('GET', '/api/studentsClasses', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $classes = json_decode($response->getBody(), true);
+
+    $this->assertTrue(count($classes) > 0);
+
+    $this->assertArrayHasKey('klasse', $classes[0]);
+  }
+
+
+  public function test_get_addStudents() {
+
+    $student = array(
+      "id" => null,
+      "kennzahl" => "",
+      "klasse" => "1e",
+      "nachname" => "Neuer Student",
+      "vorname" => "Neuer Student Vorname",
+      "geschlecht" => "m",
+      "geburtsdatum" => date('Y-m-d H:i:s'), // H:i:s
+      "performance60mRun" => 99,
+      "performance1000mRun" => 3599,
+      "performanceShotPut" => 0,
+      "performanceLongThrow" => 0,
+      "performanceLongJump" => 0,
+      "sumPoints" => 0
+    );
+
+    $response = $this->http->request('POST', '/api/addStudent', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => $student
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response_data = json_decode($response->getBody(), true);
+    $this->assertArrayHasKey('id', $response_data);
+
+    $student_id = $response_data['id'];
+
+    $response = $this->http->request('GET', '/api/student/'.$student_id, [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response_data = json_decode($response->getBody(), true);
+
+    // adopt date format
+    $student['id'] = $student_id;
+    $student['geburtsdatum'] = date('Y-m-d', strtotime($student['geburtsdatum']));
+
+    $this->assertEquals(json_encode($student), json_encode($response_data));
+  }
+
+
+  public function test_get_change_password() {
+
+    $user = array(
+      "id" => 4,
+      "pwd" => "pwd123"
+    );
+
+    $response = $this->http->request('POST', '/api/users/'.$user['id'], [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => $user
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response = $this->http->request('GET', '/api/users/'.$user['id'], [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $response_data = json_decode($response->getBody(), true);
+
+    // adopt date format
+    $this->assertEquals($user['pwd'], $response_data['pwd']);
+
+    $user['pwd'] = "test123";
+
+    $response = $this->http->request('POST', '/api/users/'.$user['id'], [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => $user
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+  }
+  
 
 }
 

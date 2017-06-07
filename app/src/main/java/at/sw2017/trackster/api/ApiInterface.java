@@ -27,6 +27,9 @@ public interface ApiInterface {
     @POST("api/login")
     Call<User> login(@Body User user);
 
+    @POST("api/users/{id}")
+    Call<ResponseBody> changeUser(@Path("id") int id, @Body User user);
+
     @POST("api/logout")
     Call<ResponseBody> logout();
 
@@ -44,4 +47,7 @@ public interface ApiInterface {
 
     @POST("api/student/{studentId}")
     Call<ResponseBody> updateStudentById(@Path("studentId") int studentId, @Body Student student);
+
+    @POST("api/addStudent")
+    Call<ResponseBody> addStudent(@Body Student student);
 }

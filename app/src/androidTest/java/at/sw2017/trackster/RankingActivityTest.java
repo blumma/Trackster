@@ -50,8 +50,7 @@ public class RankingActivityTest {
             new ActivityTestRule<>(ViewPagerActivity.class, true, true);
 
     @Test
-    public void testMenuButton()
-    {
+    public void testMenuButton() throws InterruptedException {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -70,12 +69,25 @@ public class RankingActivityTest {
         }
 
         onView(withId(R.id.viewpager)).check(matches(isCompletelyDisplayed()));
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Test
-    public void testSwipe()
-    {
+    public void testSwipe() throws InterruptedException {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -132,6 +144,21 @@ public class RankingActivityTest {
         }
 
         onView(withId(R.id.viewpager)).check(matches(hasDescendant(withText(R.string.sport_rounders))));
+
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
