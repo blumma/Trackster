@@ -39,16 +39,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String user_string = intent.getStringExtra("User");
+        int user_id_local = 0;
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(user_string);
+            user_id_local = Integer.parseInt(jsonObject.getString("id"));
             ((EditText) findViewById(R.id.edit_text_firstname)).setText(jsonObject.getString("firstName"));
             ((EditText) findViewById(R.id.edit_text_username)).setText(jsonObject.getString("email"));
             ((EditText) findViewById(R.id.edit_text_lastname)).setText(jsonObject.getString("lastName"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        final int user_id = user_id_local;
         final Button buttonChange = (Button) findViewById(R.id.button_change);
         buttonChange.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,18 +60,19 @@ public class ProfileActivity extends AppCompatActivity {
                 u.setEmail(((EditText) findViewById(R.id.edit_text_username)).getText().toString());
                 u.setPwd(((EditText) findViewById(R.id.edit_text_old_password)).getText().toString());
                 String new_pw = ((EditText) findViewById(R.id.edit_text_new_password)).getText().toString();
-
-                ProfileActivity.this.actNewPwInDatabase(u, new_pw);
+                u.setPwd(new_pw);
+                ProfileActivity.this.actNewPwInDatabase(u, user_id);
                 finish();
 
             }
         });
     }
 
-    private void actNewPwInDatabase(User user, String new_pw) {
+    private void actNewPwInDatabase(User user, int user_id) {
         //TODO: Save in Database
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiService.changeUser(new_pw,user);
+
+        Call<ResponseBody> call = apiService.changeUser(user_id,user);
         call.enqueue(new Callback<ResponseBody>() {
 
             @Override

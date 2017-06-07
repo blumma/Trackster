@@ -27,8 +27,8 @@ public interface ApiInterface {
     @POST("api/login")
     Call<User> login(@Body User user);
 
-    @POST("api/users/{newPw}")
-    Call<ResponseBody> changeUser(@Path("newPw") String newPw, @Body User user);
+    @POST("api/users/{id}")
+    Call<ResponseBody> changeUser(@Path("id") int id, @Body User user);
 
     @POST("api/logout")
     Call<ResponseBody> logout();
