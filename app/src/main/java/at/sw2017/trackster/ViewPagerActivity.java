@@ -101,15 +101,22 @@ public class ViewPagerActivity extends Activity {
 
     }
 
+    private View getHeader(String title) {
+        View header = (View) getLayoutInflater().inflate(R.layout.list_view_header, null);
+        TextView textView = (TextView) header.findViewById(R.id.txtHeader);
+        textView.setText(title);
+        return header;
+    }
+
     public void populateRanking(final List<Student> students, final ListView listview1, final ListView listview2,
                                 final ListView listview3, final ListView listview4, final ListView listview5) {
-        View header = (View) getLayoutInflater().inflate(R.layout.list_view_header, null);
-        listview1.addHeaderView(header);
+        //View header1 = (View) getLayoutInflater().inflate(R.layout.list_view_header, null);
 
-        listview2.addHeaderView(header);
-        listview3.addHeaderView(header);
-        listview4.addHeaderView(header);
-        listview5.addHeaderView(header);
+        listview1.addHeaderView(getHeader("Gesamtpunkte"));
+        listview2.addHeaderView(getHeader("60m"));
+        listview3.addHeaderView(getHeader("1000m"));
+        listview4.addHeaderView(getHeader("Weitsprung"));
+        listview5.addHeaderView(getHeader("Schlagball"));
 
         ListAdapter cust_adapter = new RankingAdapter(mContext, students, 0);
         listview1.setAdapter(cust_adapter);
@@ -132,12 +139,7 @@ public class ViewPagerActivity extends Activity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                ListAdapter cust_adapter;
+                /*
                 TextView textView = (TextView) findViewById(R.id.txtHeader);
                 switch (position) {
                     case 0:
@@ -164,6 +166,14 @@ public class ViewPagerActivity extends Activity {
                     default:
                         break;
                 }
+                */
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                //ListAdapter cust_adapter;
+
 
             }
 
