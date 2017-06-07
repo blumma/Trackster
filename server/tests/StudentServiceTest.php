@@ -163,6 +163,27 @@ class StudentServiceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(json_encode($student), json_encode($response_data));
   }
 
+  public function test_get_studentClasses() {
+
+    $response = $this->http->request('GET', '/api/studentsClasses', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
+
+    $contentType = $response->getHeaders()["Content-Type"][0];
+    $this->assertEquals("application/json", $contentType);
+
+    $classes = json_decode($response->getBody(), true);
+
+    $this->assertTrue(count($classes) > 0);
+
+    $this->assertArrayHasKey('klasse', $classes[0]);
+  }
+  
+
 }
 
 ?>
