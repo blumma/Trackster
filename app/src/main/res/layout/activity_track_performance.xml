@@ -217,6 +217,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
@@ -239,6 +240,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
@@ -261,6 +263,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
