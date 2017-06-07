@@ -52,6 +52,7 @@ public class AddStudentTest {
     @Test
     public void testAddStudent() throws Exception
     {
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -65,6 +66,12 @@ public class AddStudentTest {
         }
         catch (NoMatchingViewException e){
             //Already logged in
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         onView( withId(R.id.button_input)). perform ( click());
@@ -86,6 +93,19 @@ public class AddStudentTest {
 
         onView(withId(R.id.button_ok)).perform(click());
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

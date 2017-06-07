@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class TrackPerformanceActivity extends AppCompatActivity {
     private static final String TAG = TrackPerformanceActivity.class.getSimpleName();
     private static final String METERS_1000 = "1000m";
     private static final String METERS_60 = "60m";
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,16 +258,16 @@ public class TrackPerformanceActivity extends AppCompatActivity {
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
         Log.d(TAG, String.valueOf(student.getPerformanceLongJump()));
-        txtLongjump.setText(String.valueOf(student.getPerformanceLongJump()));
+        txtLongjump.setText(df.format(student.getPerformanceLongJump()));
 
         EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
-        txtKugel.setText(String.valueOf(student.getPerformanceShotPut()));
+        txtKugel.setText(df.format(student.getPerformanceShotPut()));
 
         EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
-        txtSchlag.setText(String.valueOf(student.getPerformanceLongThrow()));
+        txtSchlag.setText(df.format(student.getPerformanceLongThrow()));
 
         EditText txtAll = (EditText) findViewById(R.id.txt_all);
-        txtAll.setText(String.valueOf(student.getOverallScore()));
+        txtAll.setText(df.format(student.getOverallScore()));
 
     }
 
@@ -295,17 +297,17 @@ public class TrackPerformanceActivity extends AppCompatActivity {
         student.setPerformance1000mRun(TimeConvert.timeToSec(txt1000m.getText().toString()));
 
         EditText txtLongjump = (EditText) findViewById(R.id.txt_longjump);
-        student.setPerformanceLongJump(Double.parseDouble(txtLongjump.getText().toString()));
+        student.setPerformanceLongJump(df.parse(txtLongjump.getText().toString()).doubleValue());
 
         EditText txtSchlag = (EditText) findViewById(R.id.txt_schlagball);
-        student.setPerformanceLongThrow(Double.parseDouble(txtSchlag.getText().toString()));
+        student.setPerformanceLongThrow(df.parse(txtSchlag.getText().toString()).doubleValue());
 
         EditText txtKugel = (EditText) findViewById(R.id.txt_kugel);
-        student.setPerformanceShotPut(Double.parseDouble(txtKugel.getText().toString()));
+        student.setPerformanceShotPut(df.parse(txtKugel.getText().toString()).doubleValue());
 
         // Recalculate
         EditText txtAll = (EditText) findViewById(R.id.txt_all);
-        txtAll.setText(String.valueOf(student.getOverallScore()));
+        txtAll.setText(df.format(student.getOverallScore()));
 
         return student;
     }

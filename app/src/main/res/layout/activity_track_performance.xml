@@ -146,14 +146,13 @@
                     android:id="@+id/txt_60m"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:selectAllOnFocus="true" />
 
                 <TextView
                     android:id="@+id/lbl_60m"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="60m" />
 
                 <View
@@ -181,7 +180,7 @@
                     android:id="@+id/txt_1000m"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:selectAllOnFocus="true" />
 
                 <TextView
@@ -217,6 +216,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
@@ -239,6 +239,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
@@ -261,6 +262,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:digits="0123456789,"
                     android:selectAllOnFocus="true" />
 
                 <TextView
