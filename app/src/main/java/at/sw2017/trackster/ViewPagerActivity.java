@@ -1,6 +1,7 @@
 package at.sw2017.trackster;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,11 +30,16 @@ public class ViewPagerActivity extends Activity {
 
     private Context mContext;
     private ViewPager mViewPager;
+    private ProgressDialog ringProgressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        ringProgressDialog = ProgressDialog.show(this, "Bitte warten...", "Rankings werden geladen...", true);
+        ringProgressDialog.setCancelable(false);
+
         mContext = this;
         setContentView(R.layout.activity_ranking);
         ListView listview1 = new ListView(mContext);
@@ -73,6 +79,7 @@ public class ViewPagerActivity extends Activity {
                     List<Student> students = response.body();
                     populateRanking(students, listview1, listview2, listview3, listview4, listview5);
 
+
                 } else {
                     switch (response.code()) {
                         case 401:
@@ -106,6 +113,13 @@ public class ViewPagerActivity extends Activity {
 
         ListAdapter cust_adapter = new RankingAdapter(mContext, students, 0);
         listview1.setAdapter(cust_adapter);
+        listview1.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                listview1.removeOnLayoutChangeListener(this);
+                ringProgressDialog.dismiss();
+            }
+        });
         cust_adapter = new RankingAdapter(mContext, students, 1);
         listview2.setAdapter(cust_adapter);
         cust_adapter = new RankingAdapter(mContext, students, 2);
@@ -125,8 +139,7 @@ public class ViewPagerActivity extends Activity {
 
                 ListAdapter cust_adapter;
                 TextView textView = (TextView) findViewById(R.id.txtHeader);
-                switch (position)
-                {
+                switch (position) {
                     case 0:
 
                         textView.setText(R.string.ranking_title);
