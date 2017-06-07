@@ -7,12 +7,27 @@ class UserServiceTest extends PHPUnit_Framework_TestCase {
 
   public function setUp() {
     $this->http = new GuzzleHttp\Client([
-      'base_uri' => 'http://mobile-apps.dev'
+      'base_uri' => 'http://mobile-apps.dev',
+      'cookies' => true,
+      'http_errors' => false
     ]);
+
+    $response = $this->http->request('POST', '/api/login', [
+        'headers' => [
+          'Content-Type' => 'application/json'
+        ],
+        'json' => [
+          'email' => 'test@test.com',
+          'pwd' => 'test123'
+        ]
+      ]);
+
+    $this->assertEquals(200, $response->getStatusCode());
   }
   
 
   public function tearDown() {
+    $this->http->request('POST', '/api/logout');
     $this->http = null;
   }
 

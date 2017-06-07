@@ -7,4 +7,5 @@
 /api/config/server.php
 /uploads/*
 composer.phar
+/report/
 
