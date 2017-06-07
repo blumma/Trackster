@@ -86,6 +86,15 @@ public class TrackPerformanceActivityTest {
         onView(withId(R.id.txt_1000m)).perform(replaceText("0:15:0"));
         onView(withId(R.id.txt_longjump)).perform(replaceText("5"));
         onView(withId(R.id.txt_kugel)).perform(replaceText("10"));
+
+        Thread.sleep(2000);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

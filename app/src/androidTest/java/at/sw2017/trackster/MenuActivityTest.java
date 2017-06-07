@@ -2,6 +2,7 @@ package at.sw2017.trackster;
 
 import android.content.Context;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -38,38 +39,69 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class MenuActivityTest {
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = getTargetContext();
-        assertEquals("at.sw2017.trackster", appContext.getPackageName());
-    }
 
     @Rule
     public ActivityTestRule<MenuActivity> menuActivityTestRule =
             new ActivityTestRule<>(MenuActivity.class, true, true);
 
     @Test
-    public void testMenuButton()
-    {
+    public void testMenuButton() throws InterruptedException {
+        onView( withId(R.id.button_input)). perform ( click());
 
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
+            onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
+            Espresso.closeSoftKeyboard();
+            onView(withId(R.id.login_button)).perform(click());
+        }
+        catch (NoMatchingViewException e){
+            //Already logged in
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView( withId(R.id.button_1000m)). perform ( click());
 
-        //Check if not logged in:
-        onView(withText(R.string.not_logged_in)).inRoot(withDecorView(not(is(menuActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-
-        //login:
-        onView(withId(R.id.edit_text_username)).perform(typeText("pa"));
-        onView(withId(R.id.edit_text_password)).perform(typeText("pat"));
-        Espresso.closeSoftKeyboard();
-        onView( withId(R.id.login_button)). perform ( click());
-        onView( withId(R.id.button_1000m)). perform ( click());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.viewpager)).check(matches(isCompletelyDisplayed()));
 
         Espresso.pressBack();
         onView( withId(R.id.button_input)). perform ( click());
         onView(withId(R.id.textView_headline)).check(matches(isCompletelyDisplayed()));
+
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
