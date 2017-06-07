@@ -379,30 +379,30 @@ $app->post('/api/addStudent', function ($request, $response, $args) {
   return sendRestResponse($response, $data);
 })->add($isLoggedIn);
 
+
 /**
- * POST /api/users/{newPw}
+ * POST /api/users/{id}
  *
- * Save changed of specific student to DB.
+ * Update an existing user by id.
  *
  */
-$app->post('/api/users/{newPw}', function ($request, $response, $args) {
+$app->post('/api/users/{id}', function ($request, $response, $args) {
 
-  $parsedBody = $request->getParsedBody();
-  
-    $pwd = '';
-  $email = '';
-  $newPw = '';
+  $user_id = $args['id'];
+  $user = $request->getParsedBody();
 
-  if (isset($parsedBody['pwd'])) $pwd = $parsedBody['pwd'];
-  if (isset($parsedBody['email'])) $email = $parsedBody['email'];
-  if (isset($parsedBody['newPw'])) $newPw = $parsedBody['newPw'];
+  $currentUser = $_SESSION['user'];
+
+  if ($user_id != $currentUser['id']) {
+    return sendErrorReponse($response, 'No permissions.');
+  }
  
   $dbh = DbHandler::getDbh();
 
   $stmt = $dbh->prepare("UPDATE users SET pwd = ? "
-    . "WHERE email=? AND pwd=?");
+    . "WHERE id=? LIMIT 1;");
   
-  $stmt->bind_param("sss", $newPw, $email, $pwd,);
+  $stmt->bind_param("si", $user['pwd'], $user_id);
   
   if (!$stmt->execute()) {
     return sendErrorReponse($response, $stmt->error);
