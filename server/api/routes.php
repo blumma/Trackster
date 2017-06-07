@@ -412,4 +412,42 @@ $app->post('/api/users/{id}', function ($request, $response, $args) {
 })->add($isLoggedIn);
 
 
+/**
+ * Get /api/users/{id}
+ *
+ * Get an existing user by id
+ *
+ */
+$app->get('/api/users/{id}', function ($request, $response, $args) {
+
+  $user_id = $args['id'];
+  $currentUser = $_SESSION['user'];
+
+  if ($user_id != $currentUser['id']) {
+    return sendErrorReponse($response, 'No permissions.');
+  }
+ 
+  $dbh = DbHandler::getDbh();
+
+  $stmt = $dbh->prepare("SELECT id, firstName, lastName, email, pwd, "
+    . "createdAt FROM users WHERE id=?;");
+  
+  $stmt->bind_param("i", $user_id);
+  
+  if (!$stmt->execute()) {
+    return sendErrorReponse($response, $stmt->error);
+  }
+
+  $result = $stmt->get_result();
+
+  if ($result->num_rows <= 0) {
+    return sendErrorReponse($response, "User not found.", 404);
+  }
+
+  $user = $result->fetch_assoc();
+
+  return sendRestResponse($response, $user);
+})->add($isLoggedIn);
+
+
 ?>
