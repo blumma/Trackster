@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import at.sw2017.trackster.api.ApiClient;
 import at.sw2017.trackster.api.ApiInterface;
 import at.sw2017.trackster.api.SessionCookieStore;
@@ -59,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplication(), "Successful login!", Toast.LENGTH_SHORT).show();
 
                     Intent k = new Intent(LoginActivity.this, MenuActivity.class);
+                    Gson gson = new Gson();
+                    k.putExtra("User", gson.toJson(user));
                     startActivity(k);
                 } else {
                     Toast.makeText(getApplication(), R.string.error_login, Toast.LENGTH_SHORT).show();
