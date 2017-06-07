@@ -11,7 +11,31 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username" />
+        android:text="Firstname" />
+
+    <EditText
+        android:id="@+id/edit_text_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:enabled="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lastname" />
+
+    <EditText
+        android:id="@+id/edit_text_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:enabled="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username/Email" />
 
     <EditText
         android:id="@+id/edit_text_username"
@@ -56,12 +80,11 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/button_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
-            android:text="Login"
+            android:text="Save Changes"
             android:textColor="@color/colorAccentText" />
 
     </LinearLayout>
