@@ -67,6 +67,12 @@ public class AddStudentTest {
             //Already logged in
         }
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView( withId(R.id.button_input)). perform ( click());
         try {
             Thread.sleep(2000);
@@ -86,6 +92,19 @@ public class AddStudentTest {
 
         onView(withId(R.id.button_ok)).perform(click());
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
+
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Espresso.pressBack();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
